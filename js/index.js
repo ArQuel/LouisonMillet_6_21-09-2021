@@ -2,21 +2,26 @@ async function retriveContent (url) {
   try {
     const response = await fetch(url)
     const data = await response.json()
-    console.log('Une réponse ?', data)
     return data
   } catch (error) {
-    console.log('Erreur de chargement du fichier !')
     console.error(error)
   }
 }
 
-function displaytags(photographers) {
-  console.log('displaytags')
-  const navElt = document.querySelector('nav')
+// function displayElements(photographers) {
+//   console.log('displayElements')
+//   const tableauPhotographers = []
+//   for (let index = 0; index < photographers.photographers.length; index++) {
+//     tableauPhotographers.push(photographers.photographers[index].tags)
+//   } return tableauPhotographers
+// }
+
+function displaytags (photographers) {
   const tableauPhotographers = []
   for (let index = 0; index < photographers.photographers.length; index++) {
     tableauPhotographers.push(photographers.photographers[index].tags)
   }
+  const navElt = document.querySelector('nav')
   let tableauTags = []
   for (let i = 0; i < tableauPhotographers.length; i++) {
     for (let j = 0; j < tableauPhotographers[i].length; j++) {

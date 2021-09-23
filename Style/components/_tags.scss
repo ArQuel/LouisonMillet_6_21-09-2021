@@ -1,7 +1,10 @@
 .tags {
+    cursor: pointer;
     color: $primary-color;
     border: 1px solid #525252;
     border-radius: 38%;
-    padding: 8px;
+    padding: 5px;
     font-size: 18px;
+    margin-right: 5px;
+    margin-left: 10px;
 }
