@@ -9,17 +9,27 @@ async function retriveContent (url) {
     console.error(error)
   }
 }
+
 function displaytags(photographers) {
   console.log('displaytags')
   const navElt = document.querySelector('nav')
+  const tableauPhotographers = []
   for (let index = 0; index < photographers.photographers.length; index++) {
-    console.log(photographers.photographers[index])
-    navElt.innerHTML += `<div class="tags"><div>${photographers.photographers[index].tags}</div></div>`
+    tableauPhotographers.push(photographers.photographers[index].tags)
   }
-  // Object.values(photographers).forEach(photographers, index => {
-  //   console.log(photographers)
-  //   navElt.innerHTML += `<div class="tags"><div>${photographers.name}</div></div>`
-  // })
+  let tableauTags = []
+  for (let i = 0; i < tableauPhotographers.length; i++) {
+    for (let j = 0; j < tableauPhotographers[i].length; j++) {
+      tableauTags = tableauTags.concat(tableauPhotographers[j])
+    }
+  }
+  const filteredArray = tableauTags.filter(function (ele, pos) {
+    return tableauTags.indexOf(ele) === pos
+  }
+  )
+  for (let k = 0; k < filteredArray.length; k++) {
+    navElt.innerHTML += `<div class="tags"><div>#${filteredArray[k]}</div></div>`
+  }
 }
 
 retriveContent('photographers.json')
