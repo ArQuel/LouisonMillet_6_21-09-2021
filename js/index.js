@@ -11,12 +11,15 @@ async function retriveContent (url) {
 }
 function displaytags(photographers) {
   console.log('displaytags')
-  console.log(photographers)
   const navElt = document.querySelector('nav')
-  Object.values(photographers).forEach(photographers, index => {
-    console.log(photographers)
-    navElt.innerHTML += `<div class="tags"><div>${photographers[index].tags}</div></div>`
-  })
+  for (let index = 0; index < photographers.photographers.length; index++) {
+    console.log(photographers.photographers[index])
+    navElt.innerHTML += `<div class="tags"><div>${photographers.photographers[index].tags}</div></div>`
+  }
+  // Object.values(photographers).forEach(photographers, index => {
+  //   console.log(photographers)
+  //   navElt.innerHTML += `<div class="tags"><div>${photographers.name}</div></div>`
+  // })
 }
 
 retriveContent('photographers.json')
