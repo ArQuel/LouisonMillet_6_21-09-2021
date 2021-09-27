@@ -16,20 +16,101 @@ header {
 
 nav {
   width: 40%;
-  margin-left: 5%;
+  margin-left: 15%;
   display: flex;
   align-items: center;
   max-width: 740px;
 }
 
+body {
+  position: relative;
+}
+
+h1 {
+  position: absolute;
+  right: 5em;
+  top: 0.7em;
+  color: #901C1C;
+}
+
 .tags {
   cursor: pointer;
   color: #901C1C;
-  border: 1px solid #525252;
-  border-radius: 38%;
-  padding: 5px;
-  font-size: 18px;
+  font-size: 14px;
   margin-right: 5px;
   margin-left: 10px;
+  border: 0.5px solid #C4C4C4;
+  box-sizing: border-box;
+  border-radius: 15px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.disabledTags {
+  display: none;
+}
+
+.cards {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+article {
+  margin: 50px;
+  width: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 5px;
+}
+
+article p {
+  margin-top: 5px;
+}
+
+article p:nth-child(2) {
+  color: #901C1C;
+  font-size: 17px;
+}
+
+article p:nth-child(3) {
+  font-weight: bold;
+}
+
+article p:nth-child(4) {
+  opacity: 0.5;
+}
+
+article img {
+  margin: 50px 0px 0px 0px;
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 100%;
+}
+
+article a {
+  text-decoration: none;
+}
+
+article h2 {
+  margin-top: 5px;
+  color: #D3573C;
+  text-align: center;
+  font-size: 40px;
+}
+
+article span {
+  flex-direction: row;
+  color: #901C1C;
+  font-weight: bold;
+}
+
+article div {
+  margin-top: 20px;
 }
 /*# sourceMappingURL=main.css.map */

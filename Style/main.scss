@@ -19,10 +19,12 @@
 // 4. Layout-related sections
 @import 'layout/header',
 'layout/nav',
+'layout/main',
 'layout/footer';
 
 // 5. Components
-@import 'components/tags';
+@import 'components/tags',
+'components/card';
 
 // 6. Page-specific styles
 @import 'pages/home';

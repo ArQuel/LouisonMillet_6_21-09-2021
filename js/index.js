@@ -8,35 +8,75 @@ async function retriveContent (url) {
   }
 }
 
-// function displayElements(photographers) {
-//   console.log('displayElements')
-//   const tableauPhotographers = []
-//   for (let index = 0; index < photographers.photographers.length; index++) {
-//     tableauPhotographers.push(photographers.photographers[index].tags)
-//   } return tableauPhotographers
-// }
-
-function displaytags (photographers) {
-  const tableauPhotographers = []
-  for (let index = 0; index < photographers.photographers.length; index++) {
-    tableauPhotographers.push(photographers.photographers[index].tags)
-  }
+function displaytags (tags) {
   const navElt = document.querySelector('nav')
-  let tableauTags = []
-  for (let i = 0; i < tableauPhotographers.length; i++) {
-    for (let j = 0; j < tableauPhotographers[i].length; j++) {
-      tableauTags = tableauTags.concat(tableauPhotographers[j])
-    }
-  }
-  const filteredArray = tableauTags.filter(function (ele, pos) {
-    return tableauTags.indexOf(ele) === pos
-  }
-  )
-  for (let k = 0; k < filteredArray.length; k++) {
-    navElt.innerHTML += `<div class="tags"><div>#${filteredArray[k]}</div></div>`
+  for (let i = 0; i < tags.length; i++) {
+    navElt.innerHTML += `<span class="tags"><div>#${tags[i].charAt(0).toUpperCase() + tags[i].slice(1)}</span></span>`
   }
 }
 
-retriveContent('photographers.json')
-  .then(photographers => { displaytags(photographers) })
+function getTagsFrom (photographers) {
+  let tableauTags = []
+  for (let index = 0; index < photographers.length; index++) {
+    tableauTags = tableauTags.concat(photographers[index].tags)
+  }
+  const filteredArrayTags = tableauTags.filter(function (ele, pos) {
+    return tableauTags.indexOf(ele) === pos
+  })
+  return filteredArrayTags
+}
+
+function displayCards (photographers) {
+  const cardsElt = document.querySelector('.cards')
+  for (let i = 0; i < photographers.length; i++) {
+    cardsElt.innerHTML += `<article class="card_photographer">
+    <a href="${photographers[i].page}">
+        <img src="${photographers[i].portrait}">
+        <h2>
+            ${photographers[i].name}
+        </h2>
+    </a>
+    <p>
+     ${photographers[i].city}, ${photographers[i].country}
+    </p>
+    <p>
+     ${photographers[i].tagline}
+    </p>
+    <p>
+     ${photographers[i].price} /jour
+    </p>
+    <div>
+    <span class="tags">
+        ${photographers[i].tags[0]}
+    </span>
+    <span class="tags">
+        ${photographers[i].tags[1]}
+    </span>
+    <span class="tags">
+        ${photographers[i].tags[2]}
+    </span>
+    <span class="tags">
+        ${photographers[i].tags[3]}
+    </span>
+    </div>
+</article>`
+  }
+  retirerTags(photographers)
+}
+
+function retirerTags (photographers) {
+  const tagElt = document.querySelectorAll('article .tags')
+  if (tagElt.innerText === 'undefined') {
+    console.log(tagElt.innerText)
+    tagElt.className = 'disabledTags'
+  }
+}
+
+
+retriveContent('data.json')
+  .then(data => {
+    const tags = getTagsFrom(data.photographers)
+    displaytags(tags)
+    displayCards(data.photographers)
+  })
   .catch(error => alert(error.message))
