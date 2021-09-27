@@ -66,12 +66,11 @@ function displayCards (photographers) {
 
 function retirerTags (photographers) {
   const tagElt = document.querySelectorAll('article .tags')
-  if (tagElt.innerText === 'undefined') {
+  if (tagElt.value === undefined) {
     console.log(tagElt.innerText)
     tagElt.className = 'disabledTags'
   }
 }
-
 
 retriveContent('data.json')
   .then(data => {
