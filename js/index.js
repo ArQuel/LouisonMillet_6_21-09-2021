@@ -11,7 +11,7 @@ async function retriveContent (url) {
 function displaytags (tags) {
   const navElt = document.querySelector('nav')
   for (let i = 0; i < tags.length; i++) {
-    navElt.innerHTML += `<span class="tags"><div>#${tags[i].charAt(0).toUpperCase() + tags[i].slice(1)}</span></span>`
+    navElt.innerHTML += `<span class="tags"><div class="navTags">#${tags[i].charAt(0).toUpperCase() + tags[i].slice(1)}</span></span>`
   }
 }
 
@@ -55,10 +55,14 @@ function displayCards (photographers) {
 function displayCardsTags (photographers, index) {
   const divElt = document.getElementsByClassName('tagsList')[index]
   for (let j = 0; j < photographers[index].tags.length; j++) {
-    divElt.innerHTML += `    
+    // const navTags = document.querySelectorAll('.navTags')
+    // console.log(photographers[index].tags[j], navTags.value)
+    // if (photographers[index].tags[j] === navTags.value) {
+      divElt.innerHTML += `    
     <span class="tags">
-        #${photographers[index].tags[j]}
+        #${photographers[index].tags[j].charAt(0).toUpperCase() + photographers[index].tags[j].slice(1)}
     </span>`
+    // }
   }
 }
 
