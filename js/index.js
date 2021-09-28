@@ -53,7 +53,7 @@ function displayCards (photographers) {
 }
 
 function displayCardsTags (photographers, index) {
-  const divElt = document.querySelector('.tagsList')
+  const divElt = document.getElementsByClassName('tagsList')[index]
   for (let j = 0; j < photographers[index].tags.length; j++) {
     divElt.innerHTML += `    
     <span class="tags">
