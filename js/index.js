@@ -45,30 +45,20 @@ function displayCards (photographers) {
     <p>
      ${photographers[i].price} /jour
     </p>
-    <div>
-    <span class="tags">
-        ${photographers[i].tags[0]}
-    </span>
-    <span class="tags">
-        ${photographers[i].tags[1]}
-    </span>
-    <span class="tags">
-        ${photographers[i].tags[2]}
-    </span>
-    <span class="tags">
-        ${photographers[i].tags[3]}
-    </span>
+    <div class='tagsList'>
     </div>
 </article>`
+    displayCardsTags(photographers, i)
   }
-  retirerTags(photographers)
 }
 
-function retirerTags (photographers) {
-  const tagElt = document.querySelectorAll('article .tags')
-  if (tagElt.value === undefined) {
-    console.log(tagElt.innerText)
-    tagElt.className = 'disabledTags'
+function displayCardsTags (photographers, index) {
+  const divElt = document.querySelector('.tagsList')
+  for (let j = 0; j < photographers[index].tags.length; j++) {
+    divElt.innerHTML += `    
+    <span class="tags">
+        #${photographers[index].tags[j]}
+    </span>`
   }
 }
 

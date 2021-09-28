@@ -39,6 +39,7 @@ h1 {
   font-size: 14px;
   margin-right: 5px;
   margin-left: 10px;
+  margin-bottom: 5px;
   border: 0.5px solid #C4C4C4;
   box-sizing: border-box;
   border-radius: 15px;
@@ -50,6 +51,12 @@ h1 {
 
 .disabledTags {
   display: none;
+}
+
+.tagsList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .cards {
