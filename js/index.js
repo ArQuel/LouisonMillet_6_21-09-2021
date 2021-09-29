@@ -38,7 +38,6 @@ function displaytags (tags) {
 
 function displayCards (photographers) {
   const cardsElt = document.querySelector('.cards')
-  console.log(cardsElt)
   for (let i = 0; i < photographers.length; i++) {
     cardsElt.innerHTML += `<article class="card_photographer">
       <a href="${photographers[i].page}">
@@ -82,6 +81,9 @@ function addListenersToTags (tagsList, photographers) {
       const tag = e.target.dataset.tag
       const filterPhotographers = photographers.filter(photographer => photographer.tags.includes(tag))
       displayCards(filterPhotographers)
+      const pageTags = document.querySelectorAll('article span.tags')
+      addListenersToTags(pageTags, photographers)
     })
   })
 }
+
