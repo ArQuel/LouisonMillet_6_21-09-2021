@@ -3,6 +3,8 @@ retriveContent('data.json')
     const tags = getTagsFrom(data.photographers)
     displaytags(tags)
     displayCards(data.photographers)
+    const pageTags = document.querySelectorAll('.tags')
+    addListenersToTags(pageTags, data.photographers)
   })
   .catch(error => alert(error.message))
 
@@ -30,12 +32,13 @@ function getTagsFrom (photographers) {
 function displaytags (tags) {
   const navElt = document.querySelector('nav')
   for (let i = 0; i < tags.length; i++) {
-    navElt.innerHTML += `<span class="tags">#${tags[i].charAt(0).toUpperCase() + tags[i].slice(1)}</span>`
+    navElt.innerHTML += `<span class="tags" data-tag="${tags[i]}">#${tags[i].charAt(0).toUpperCase() + tags[i].slice(1)}</span>`
   }
 }
 
 function displayCards (photographers) {
   const cardsElt = document.querySelector('.cards')
+  console.log(cardsElt)
   for (let i = 0; i < photographers.length; i++) {
     cardsElt.innerHTML += `<article class="card_photographer">
       <a href="${photographers[i].page}">
@@ -61,15 +64,24 @@ function displayCards (photographers) {
 }
 
 function displayCardsTags (photographers, index) {
-  const divElt = document.getElementsByClassName('tagsList')[index]
+  const photographersElts = document.getElementsByClassName('card_photographer')
+  const divElt = photographersElts[photographersElts.length - 1].querySelector('.tagsList')
   for (let j = 0; j < photographers[index].tags.length; j++) {
-    // const navTags = document.querySelectorAll('.navTags')
-    // console.log(photographers[index].tags[j], navTags.value)
-    // if (photographers[index].tags[j] === navTags.value) {
     divElt.innerHTML += `    
-      <span class="tags">
+      <span class="tags" data-tag="${photographers[index].tags[j]}">
           #${photographers[index].tags[j].charAt(0).toUpperCase() + photographers[index].tags[j].slice(1)}
       </span>`
-    // }
   }
+}
+
+function addListenersToTags (tagsList, photographers) {
+  tagsList.forEach(tag => {
+    tag.addEventListener('click', (e) => {
+      const cardsElt = document.querySelector('.cards')
+      cardsElt.innerHTML = ''
+      const tag = e.target.dataset.tag
+      const filterPhotographers = photographers.filter(photographer => photographer.tags.includes(tag))
+      displayCards(filterPhotographers)
+    })
+  })
 }
