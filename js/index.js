@@ -40,7 +40,7 @@ function displayCards (photographers) {
   const cardsElt = document.querySelector('.cards')
   for (let i = 0; i < photographers.length; i++) {
     cardsElt.innerHTML += `<article class="card_photographer">
-      <a href="${photographers[i].page}">
+      <a href="/photographersPage.html?id=${photographers[i].id}">
           <img src="${photographers[i].portrait}">
           <h2>
               ${photographers[i].name}
@@ -86,4 +86,3 @@ function addListenersToTags (tagsList, photographers) {
     })
   })
 }
-
