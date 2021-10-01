@@ -1,10 +1,9 @@
 retriveContent('data.json')
   .then(data => {
-    const tags = getTagsFrom(data.photographers)
     const photographers = data.photographers
     const medias = data.medias
     const url = document.location.href
-    displayDesc(photographers, url, medias, tags)
+    displayDesc(photographers, url)
   })
   .catch(error => alert(error.message))
 
@@ -18,18 +17,8 @@ async function retriveContent (url) {
   }
 }
 
-function getTagsFrom (photographers) {
-  let tableauTags = []
-  for (let index = 0; index < photographers.length; index++) {
-    tableauTags = tableauTags.concat(photographers[index].tags)
-  }
-  const filteredArrayTags = tableauTags.filter(function (ele, pos) {
-    return tableauTags.indexOf(ele) === pos
-  })
-  return filteredArrayTags
-}
 
-function displayDesc (photographers, url, medias, tags) {
+function displayDesc (photographers, url) {
   const photographHeader = document.getElementsByClassName('photograph-header')[0]
   let id = url.slice(48)
   id = parseInt(id)
