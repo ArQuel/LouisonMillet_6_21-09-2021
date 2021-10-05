@@ -1,9 +1,9 @@
 retriveContent('data.json')
   .then(data => {
     const photographers = data.photographers
-    const medias = data.medias
-    const url = document.location.href
-    displayDesc(photographers, url)
+    const url = document.location.search
+    const medias = data.media
+    displayDesc(photographers, url, medias)
   })
   .catch(error => alert(error.message))
 
@@ -17,15 +17,13 @@ async function retriveContent (url) {
   }
 }
 
-
-function displayDesc (photographers, url) {
+function displayDesc (photographers, url, medias) {
   const photographHeader = document.getElementsByClassName('photograph-header')[0]
-  let id = url.slice(48)
+  let id = url.substring(url.lastIndexOf(' = ') + 5)
   id = parseInt(id)
   for (let i = 0; i < photographers.length; i++) {
     if (photographers[i].id === id) {
       const actualPhotographer = photographers[i]
-      console.log(actualPhotographer)
       photographHeader.innerHTML += `<div>
   <h1>
       ${actualPhotographer.name}
@@ -49,6 +47,22 @@ function displayDesc (photographers, url) {
   <img src="${photographers[i].portrait}">
 </div>`
       displayCardsTags(actualPhotographer)
+      const mediasElt = document.getElementsByClassName('medias')[0]
+      for (let media = 0; media < medias.length; media++) {
+        if (actualPhotographer.id === medias[media].photographerId) {
+          mediasElt.innerHTML += `<div class="card_media">
+          <img src="img/${actualPhotographer.name}/${medias[media].image}">
+          <p>${medias[media].title}</p>
+          <div>
+          <span>
+          ${medias[media].likes}
+          </span>
+          <i class="fas fa-heart"></i>
+          </div>
+          </div>`
+          console.log()
+        }
+      }
     }
   }
 }
