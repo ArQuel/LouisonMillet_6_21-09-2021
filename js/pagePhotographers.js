@@ -4,6 +4,8 @@ retriveContent('data.json')
     const url = document.location.search
     const medias = data.media
     displayDesc(photographers, url, medias)
+    const mediaCard = document.querySelectorAll('.card_media')
+    addEvents(mediaCard)
   })
   .catch(error => alert(error.message))
 
@@ -47,23 +49,39 @@ function displayDesc (photographers, url, medias) {
   <img src="${photographers[i].portrait}">
 </div>`
       displayCardsTags(actualPhotographer)
-      const mediasElt = document.getElementsByClassName('medias')[0]
       for (let media = 0; media < medias.length; media++) {
         if (actualPhotographer.id === medias[media].photographerId) {
-          mediasElt.innerHTML += `<div class="card_media">
-          <img src="img/${actualPhotographer.name}/${medias[media].image}">
-          <p>${medias[media].title}</p>
-          <div>
-          <span>
-          ${medias[media].likes}
-          </span>
-          <i class="fas fa-heart"></i>
-          </div>
-          </div>`
-          console.log()
+          factoryMedia(actualPhotographer, medias[media])
         }
       }
     }
+  }
+}
+
+function factoryMedia (actualPhotographer, media) {
+  const mediasElt = document.getElementsByClassName('medias')[0]
+  if (media.hasOwnProperty(('image'))) {
+    mediasElt.innerHTML += `<div class="card_media">
+  <img src="img/${actualPhotographer.name}/${media.image}">
+  <p>${media.title}</p>
+  <div>
+  <span>
+  ${media.likes}
+  </span>
+  <i class="fas fa-heart"></i>
+  </div>
+  </div>`
+  } else if (media.hasOwnProperty(('video'))) {
+    mediasElt.innerHTML += `<div class="card_media">
+    <video controls src="img/${actualPhotographer.name}/${media.video}">
+    <p>${media.title}</p>
+    <div>
+    <span>
+    ${media.likes}
+    </span>
+    <i class="fas fa-heart"></i>
+    </div>
+    </div>`
   }
 }
 
@@ -76,4 +94,17 @@ function displayCardsTags (photographer) {
             #${photographer.tags[j].charAt(0).toUpperCase() + photographer.tags[j].slice(1)}
         </span>`
   }
+}
+
+function addEvents (mediaCard) {
+  mediaCard.forEach((media) => media.addEventListener('click', displayGallery))
+}
+
+function displayGallery () {
+  const slider = document.querySelector('.slider')
+  const main = document.querySelector('#second-page')
+  const header = document.querySelector('header')
+  slider.style.display = 'block'
+  main.style.filter = 'blur(10px)'
+  header.style.filter = 'blur(10px)'
 }
