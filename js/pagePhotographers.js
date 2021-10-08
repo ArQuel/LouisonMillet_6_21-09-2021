@@ -60,7 +60,7 @@ function displayDesc (photographers, url, medias) {
 
 function factoryMedia (actualPhotographer, media) {
   const mediasElt = document.getElementsByClassName('medias')[0]
-  if (media.hasOwnProperty(('image'))) {
+  if ('image' in media) {
     mediasElt.innerHTML += `<div class="card_media">
   <img src="img/${actualPhotographer.name}/${media.image}">
   <p>${media.title}</p>
@@ -71,7 +71,7 @@ function factoryMedia (actualPhotographer, media) {
   <i class="fas fa-heart"></i>
   </div>
   </div>`
-  } else if (media.hasOwnProperty(('video'))) {
+  } else if ('video' in media) {
     mediasElt.innerHTML += `<div class="card_media">
     <video controls src="img/${actualPhotographer.name}/${media.video}">
     <p>${media.title}</p>

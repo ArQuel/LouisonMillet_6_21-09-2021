@@ -66,7 +66,7 @@ body {
 .medias {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-around;
   width: 73%;
   justify-self: center;
   margin-left: 13%;
@@ -81,7 +81,7 @@ body {
 .medias .card_media p {
   color: #901C1C;
   font-weight: bold;
-  font-size: 28px;
+  font-size: 24px;
   position: absolute;
   left: 0%;
   bottom: 0%;
