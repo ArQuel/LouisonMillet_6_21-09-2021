@@ -62,7 +62,7 @@ function factoryMedia (actualPhotographer, media) {
   const mediasElt = document.getElementsByClassName('medias')[0]
   if ('image' in media) {
     mediasElt.innerHTML += `<div class="card_media">
-  <img src="img/${actualPhotographer.name}/${media.image}">
+  <img src="img/${actualPhotographer.name}/${media.image}"></img>
   <p>${media.title}</p>
   <div>
   <span>
@@ -73,7 +73,7 @@ function factoryMedia (actualPhotographer, media) {
   </div>`
   } else if ('video' in media) {
     mediasElt.innerHTML += `<div class="card_media">
-    <video controls src="img/${actualPhotographer.name}/${media.video}">
+    <video controls src="img/${actualPhotographer.name}/${media.video}"></video>
     <p>${media.title}</p>
     <div>
     <span>
