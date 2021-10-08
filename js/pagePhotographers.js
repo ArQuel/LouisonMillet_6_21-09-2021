@@ -85,6 +85,7 @@ function factoryMedia (actualPhotographer, media) {
   }
 }
 
+
 function displayCardsTags (photographer) {
   const photographHeader = document.getElementsByClassName('photograph-header')[0]
   const divElt = photographHeader.querySelector('.tagsList')
