@@ -22,7 +22,6 @@
 
         div {
             display: flex;
-            width: 50px;
             position: absolute;
             right: 0%;
             bottom: 0%;
@@ -31,7 +30,14 @@
         span {
             color: $primary-color;
             font-weight: bold;
-            font-size: 28px;
+            font-size: 24px;
+        }
+
+        svg {
+            width: 24px;
+            height: 24px;
+            padding-left: 10px;
+            color: $primary-color;
         }
     }
 

@@ -85,8 +85,6 @@ function factoryMedia (actualPhotographer, media) {
   }
 }
 
-/* Coucouille Léo Millet*/
-
 function displayCardsTags (photographer) {
   const photographHeader = document.getElementsByClassName('photograph-header')[0]
   const divElt = photographHeader.querySelector('.tagsList')
@@ -110,3 +108,4 @@ function displayGallery () {
   main.style.filter = 'blur(10px)'
   header.style.filter = 'blur(10px)'
 }
+

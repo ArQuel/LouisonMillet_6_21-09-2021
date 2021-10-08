@@ -1,0 +1,22 @@
+{
+  "name": "projet6",
+  "version": "1.0.0",
+  "description": "Projet 6 OCR",
+  "main": ".eslintrc.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ArQuel/LouisonMillet_6_21-09-2021.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ArQuel/LouisonMillet_6_21-09-2021/issues"
+  },
+  "homepage": "https://github.com/ArQuel/LouisonMillet_6_21-09-2021#readme",
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.4"
+  }
+}

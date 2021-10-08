@@ -136,7 +136,6 @@ body {
 
 .medias .card_media div {
   display: flex;
-  width: 50px;
   position: absolute;
   right: 0%;
   bottom: 0%;
@@ -145,7 +144,14 @@ body {
 .medias .card_media span {
   color: #901C1C;
   font-weight: bold;
-  font-size: 28px;
+  font-size: 24px;
+}
+
+.medias .card_media svg {
+  width: 24px;
+  height: 24px;
+  padding-left: 10px;
+  color: #901C1C;
 }
 
 .medias img, .medias video {
