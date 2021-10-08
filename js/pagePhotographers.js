@@ -85,6 +85,7 @@ function factoryMedia (actualPhotographer, media) {
   }
 }
 
+/* Coucouille Léo Millet*/
 
 function displayCardsTags (photographer) {
   const photographHeader = document.getElementsByClassName('photograph-header')[0]
