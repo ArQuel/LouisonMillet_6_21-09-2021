@@ -1,0 +1,49 @@
+
+.bground{
+    width: 100%;
+    height: 100%;
+}
+
+.slider {
+    display: none;
+    position: fixed;
+    left: 7%;
+    right: 7%;
+    top: 7%;
+    bottom: 5%;
+    overflow: auto;
+  }
+
+  .prev-slide:after{
+    content: "\276C";
+    color: black;
+	display: block;
+	position: absolute;
+	padding: 2rem;
+    font-size: 15rem;
+    font-weight: bold;
+	height: 10rem;
+	line-height: 10rem;
+	top: 50%;
+	transform: translate3d(0, -50%, 0);
+    cursor: pointer;
+    left: 0%;
+  }
+
+  .next-slide:after{
+    content: "\276D";
+    color: black;
+	display: block;
+	position: absolute;
+	padding: 2rem;
+    font-size: 15rem;
+    font-weight: bold;
+	height: 10rem;
+	line-height: 10rem;
+	top: 50%;
+	transform: translate3d(0, -50%, 0);
+    cursor: pointer;
+    right: 0%;
+  }
+
+
