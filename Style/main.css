@@ -74,40 +74,57 @@ body {
   left: 7%;
   right: 7%;
   top: 7%;
-  bottom: 5%;
-  overflow: auto;
+  bottom: 7%;
+  align-items: center;
 }
 
-.prev-slide:after {
+.slider .display {
+  width: 100%;
+}
+
+.slider .display video {
+  width: 70%;
+  height: 100%;
+  position: absolute;
+  right: 0%;
+  left: 15%;
+  top: 0%;
+  bottom: 0%;
+}
+
+.slider .display img {
+  max-width: 70%;
+  max-height: 100%;
+  position: absolute;
+  right: 0%;
+  left: 15%;
+  top: 0%;
+  bottom: 0%;
+  object-fit: cover;
+}
+
+.slider .prev-slide:after {
   content: "\276C";
   color: black;
-  display: block;
-  position: absolute;
   padding: 2rem;
   font-size: 15rem;
   font-weight: bold;
   height: 10rem;
   line-height: 10rem;
-  top: 50%;
   transform: translate3d(0, -50%, 0);
   cursor: pointer;
-  left: 0%;
 }
 
-.next-slide:after {
+.slider .next-slide:after {
   content: "\276D";
   color: black;
-  display: block;
-  position: absolute;
   padding: 2rem;
   font-size: 15rem;
   font-weight: bold;
   height: 10rem;
   line-height: 10rem;
-  top: 50%;
   transform: translate3d(0, -50%, 0);
   cursor: pointer;
-  right: 0%;
 }
 
 .medias {

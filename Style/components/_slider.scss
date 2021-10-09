@@ -10,40 +10,60 @@
     left: 7%;
     right: 7%;
     top: 7%;
-    bottom: 5%;
-    overflow: auto;
+    bottom: 7%;
+    align-items: center;
+
+    .display{
+
+        width: 100%;
+        video {
+            width: 70%;
+            height: 100%;
+            position: absolute;
+            right: 0%;
+            left: 15%;
+            top: 0%;
+            bottom: 0%;
+        }
+    
+        img {
+            max-width: 70%;
+            max-height: 100%;
+            position: absolute;
+            right: 0%;
+            left: 15%;
+            top: 0%;
+            bottom: 0%;
+            object-fit: cover;
+        }
+
+    }
+
+    .prev-slide:after{
+        content: "\276C";
+        color: black;
+        padding: 2rem;
+        font-size: 15rem;
+        font-weight: bold;
+        height: 10rem;
+        line-height: 10rem;
+        transform: translate3d(0, -50%, 0);
+        cursor: pointer;
+      }
+    
+      .next-slide:after{
+        content: "\276D";
+        color: black;
+        padding: 2rem;
+        font-size: 15rem;
+        font-weight: bold;
+        height: 10rem;
+        line-height: 10rem;
+        transform: translate3d(0, -50%, 0);
+        cursor: pointer;
+      }
   }
 
-  .prev-slide:after{
-    content: "\276C";
-    color: black;
-	display: block;
-	position: absolute;
-	padding: 2rem;
-    font-size: 15rem;
-    font-weight: bold;
-	height: 10rem;
-	line-height: 10rem;
-	top: 50%;
-	transform: translate3d(0, -50%, 0);
-    cursor: pointer;
-    left: 0%;
-  }
-
-  .next-slide:after{
-    content: "\276D";
-    color: black;
-	display: block;
-	position: absolute;
-	padding: 2rem;
-    font-size: 15rem;
-    font-weight: bold;
-	height: 10rem;
-	line-height: 10rem;
-	top: 50%;
-	transform: translate3d(0, -50%, 0);
-    cursor: pointer;
-    right: 0%;
-  }
+  
 
 

@@ -4,8 +4,9 @@ retriveContent('data.json')
     const url = document.location.search
     const medias = data.media
     displayDesc(photographers, url, medias)
-    const mediaCard = document.querySelectorAll('.card_media')
-    addEvents(mediaCard)
+    const mediaIMG = document.querySelectorAll('img')
+    const mediaVID = document.querySelectorAll('video')
+    addEvents(mediaIMG, mediaVID)
   })
   .catch(error => alert(error.message))
 
@@ -60,6 +61,7 @@ function displayDesc (photographers, url, medias) {
 
 function factoryMedia (actualPhotographer, media) {
   const mediasElt = document.getElementsByClassName('medias')[0]
+  //Mieux elt in Obj ou hasOwnProperty()?
   if ('image' in media) {
     mediasElt.innerHTML += `<div class="card_media">
   <img src="img/${actualPhotographer.name}/${media.image}"></img>
@@ -73,7 +75,7 @@ function factoryMedia (actualPhotographer, media) {
   </div>`
   } else if ('video' in media) {
     mediasElt.innerHTML += `<div class="card_media">
-    <video controls src="img/${actualPhotographer.name}/${media.video}"></video>
+    <video src="img/${actualPhotographer.name}/${media.video}"></video>
     <p>${media.title}</p>
     <div>
     <span>
@@ -96,16 +98,30 @@ function displayCardsTags (photographer) {
   }
 }
 
-function addEvents (mediaCard) {
-  mediaCard.forEach((media) => media.addEventListener('click', displayGallery))
+function addEvents (mediaIMG, mediaVID) {
+  mediaIMG.forEach((media) => media.addEventListener('click', (e) => {
+    console.log(media)
+    const slider = document.querySelector('.slider')
+    const main = document.querySelector('#second-page')
+    const header = document.querySelector('header')
+    slider.style.display = 'flex'
+    main.style.filter = 'blur(10px)'
+    header.style.filter = 'blur(10px)'
+    slider.innerHTML += `<div class='nav-btn prev-slide'></div>
+    <div class='display'><img src=${media.src}></img></div>
+    <div class='nav-btn next-slide'></div>`
+  }))
+  mediaVID.forEach((media) => media.addEventListener('click', (e) => {
+    const slider = document.querySelector('.slider')
+    const main = document.querySelector('#second-page')
+    const header = document.querySelector('header')
+    slider.style.display = 'flex'
+    main.style.filter = 'blur(10px)'
+    header.style.filter = 'blur(10px)'
+    slider.innerHTML += `<div class='nav-btn prev-slide'></div>
+    <div class='display'><video controls src=${media.src}></video></div>
+    <div class='nav-btn next-slide'></div>`
+  }))
 }
 
-function displayGallery () {
-  const slider = document.querySelector('.slider')
-  const main = document.querySelector('#second-page')
-  const header = document.querySelector('header')
-  slider.style.display = 'block'
-  main.style.filter = 'blur(10px)'
-  header.style.filter = 'blur(10px)'
-}
 
