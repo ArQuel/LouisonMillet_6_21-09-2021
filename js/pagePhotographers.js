@@ -6,7 +6,7 @@ retriveContent('data.json')
     displayDesc(photographers, url, medias)
     const mediaIMG = document.querySelectorAll('.medias img')
     const mediaVID = document.querySelectorAll('.medias video')
-    addEvents(mediaIMG, mediaVID)
+    addEvents(mediaIMG, mediaVID, medias)
   })
   .catch(error => alert(error.message))
 
@@ -104,8 +104,14 @@ function displayCardsTags (photographer) {
   }
 }
 
-function addEvents (mediaIMG, mediaVID) {
+function addEvents (mediaIMG, mediaVID, medias) {
   mediaIMG.forEach((media) => media.addEventListener('click', (e) => {
+    // for (let index; index < medias.length; index++) {
+    //   console.log(medias[index].image, media.src)
+    //   if (medias[index].image === media.src) {
+    //     console.log('cc')
+    //   }
+    // }
     const slider = document.querySelector('.slider')
     const main = document.querySelector('#second-page')
     const header = document.querySelector('header')
@@ -113,8 +119,16 @@ function addEvents (mediaIMG, mediaVID) {
     slider.style.display = 'flex'
     main.style.filter = 'blur(10px)'
     header.style.filter = 'blur(10px)'
+
     slider.innerHTML += `<div class='nav-btn prev-slide'></div>
     <div class='display'><img src=${media.src}></img></div>
+    <p>${media.title}</p>
+    <div>
+    <span>
+    ${media.likes}
+    </span>
+    <i class="fas fa-heart"></i>
+    </div>
     <div id="cross">X</div>
     <div class='nav-btn next-slide'></div>`
     const cross = document.querySelector('#cross')
@@ -135,6 +149,13 @@ function addEvents (mediaIMG, mediaVID) {
     header.style.filter = 'blur(10px)'
     slider.innerHTML += `<div class='nav-btn prev-slide'></div>
     <div class='display'><video controls src=${media.src}></video></div>
+    <p>${media.title}</p>
+    <div>
+    <span>
+    ${media.likes}
+    </span>
+    <i class="fas fa-heart"></i>
+    </div>
     <div id="cross">X</div>
     <div class='nav-btn next-slide'></div>`
     const cross = document.querySelector('#cross')
