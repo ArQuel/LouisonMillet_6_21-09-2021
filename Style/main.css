@@ -102,11 +102,13 @@ body {
 .slider {
   display: none;
   position: fixed;
-  left: 7%;
-  right: 7%;
-  top: 7%;
-  bottom: 7%;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
   align-items: center;
+  background-color: white;
+  padding: 50px;
 }
 
 .slider .display {
@@ -129,6 +131,17 @@ body {
   display: block;
   margin: auto;
   object-fit: cover;
+}
+
+.slider #cross {
+  position: absolute;
+  padding: 10px;
+  top: 2%;
+  right: 13%;
+  color: #901C1C;
+  font-weight: bold;
+  font-size: 50px;
+  cursor: pointer;
 }
 
 .slider .prev-slide:after {

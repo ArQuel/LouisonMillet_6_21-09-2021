@@ -4,8 +4,8 @@ retriveContent('data.json')
     const url = document.location.search
     const medias = data.media
     displayDesc(photographers, url, medias)
-    const mediaIMG = document.querySelectorAll('img')
-    const mediaVID = document.querySelectorAll('video')
+    const mediaIMG = document.querySelectorAll('.medias img')
+    const mediaVID = document.querySelectorAll('.medias video')
     addEvents(mediaIMG, mediaVID)
   })
   .catch(error => alert(error.message))
@@ -58,6 +58,9 @@ function displayDesc (photographers, url, medias) {
         console.log(mediasElt)
         const select = document.querySelector('select')
         displayMediasSortedBy(select.value, photographerMedias, mediasElt, actualPhotographer)
+        const mediaIMG = document.querySelectorAll('img')
+        const mediaVID = document.querySelectorAll('video')
+        addEvents(mediaIMG, mediaVID)
       })
     }
   }
@@ -106,23 +109,41 @@ function addEvents (mediaIMG, mediaVID) {
     const slider = document.querySelector('.slider')
     const main = document.querySelector('#second-page')
     const header = document.querySelector('header')
+    slider.innerHTML = ''
     slider.style.display = 'flex'
     main.style.filter = 'blur(10px)'
     header.style.filter = 'blur(10px)'
     slider.innerHTML += `<div class='nav-btn prev-slide'></div>
     <div class='display'><img src=${media.src}></img></div>
+    <div id="cross">X</div>
     <div class='nav-btn next-slide'></div>`
+    const cross = document.querySelector('#cross')
+    cross.addEventListener('click', (e) => {
+      slider.style.display = 'none'
+      main.style.filter = 'blur(0px)'
+      header.style.filter = 'blur(0px)'
+      console.log(slider)
+    })
   }))
   mediaVID.forEach((media) => media.addEventListener('click', (e) => {
     const slider = document.querySelector('.slider')
     const main = document.querySelector('#second-page')
     const header = document.querySelector('header')
+    slider.innerHTML = ''
     slider.style.display = 'flex'
     main.style.filter = 'blur(10px)'
     header.style.filter = 'blur(10px)'
     slider.innerHTML += `<div class='nav-btn prev-slide'></div>
     <div class='display'><video controls src=${media.src}></video></div>
+    <div id="cross">X</div>
     <div class='nav-btn next-slide'></div>`
+    const cross = document.querySelector('#cross')
+    cross.addEventListener('click', (e) => {
+      slider.style.display = 'none'
+      main.style.filter = 'blur(0px)'
+      header.style.filter = 'blur(0px)'
+      addEvents(mediaIMG, mediaVID)
+    })
   }))
 }
 
