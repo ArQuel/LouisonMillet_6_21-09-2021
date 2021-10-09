@@ -1,0 +1,33 @@
+.select-container{
+    display: flex;
+
+    p {
+        margin-left: 4%;
+        margin-right: 20px;
+        font-size: 22px;
+        font-weight: bold;
+        padding-top: 15px;
+    }
+
+    select {
+        padding-left: 30px;
+        border: none;
+        color: white;
+        font-weight: bold;
+        font-size: 18px;
+        width: 170px;
+        height: calc(170px / 3);
+        background-color: $primary-color;
+    }
+
+    option {
+        color: white;
+        font-weight: bold;
+        font-size: 18px;
+        padding-top: 10px;
+        line-height: 500px;
+    }   
+
+}
+
+

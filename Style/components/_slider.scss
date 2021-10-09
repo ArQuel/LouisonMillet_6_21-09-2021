@@ -28,12 +28,9 @@
     
         img {
             max-width: 70%;
-            max-height: 100%;
-            position: absolute;
-            right: 0%;
-            left: 15%;
-            top: 0%;
-            bottom: 0%;
+            max-height: 70vh;
+            display: block;
+            margin: auto;
             object-fit: cover;
         }
 
@@ -41,9 +38,9 @@
 
     .prev-slide:after{
         content: "\276C";
-        color: black;
+        color: $primary-color;
         padding: 2rem;
-        font-size: 15rem;
+        font-size: 10rem;
         font-weight: bold;
         height: 10rem;
         line-height: 10rem;
@@ -53,9 +50,9 @@
     
       .next-slide:after{
         content: "\276D";
-        color: black;
+        color: $primary-color;
         padding: 2rem;
-        font-size: 15rem;
+        font-size: 10rem;
         font-weight: bold;
         height: 10rem;
         line-height: 10rem;

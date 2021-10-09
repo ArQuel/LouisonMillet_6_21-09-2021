@@ -50,18 +50,21 @@ function displayDesc (photographers, url, medias) {
   <img src="${photographers[i].portrait}">
 </div>`
       displayCardsTags(actualPhotographer)
-      for (let media = 0; media < medias.length; media++) {
-        if (actualPhotographer.id === medias[media].photographerId) {
-          factoryMedia(actualPhotographer, medias[media])
-        }
-      }
+      const photographerMedias = medias.filter(elt => elt.photographerId === actualPhotographer.id)
+      const mediasElt = document.getElementsByClassName('medias')[0]
+      photographerMedias.sort((a, b) => b.likes - a.likes)
+      displayMediasSortedBy('Popularité', photographerMedias, mediasElt, actualPhotographer)
+      document.querySelector('select').addEventListener('change', (e) => {
+        console.log(mediasElt)
+        const select = document.querySelector('select')
+        displayMediasSortedBy(select.value, photographerMedias, mediasElt, actualPhotographer)
+      })
     }
   }
 }
 
-function factoryMedia (actualPhotographer, media) {
-  const mediasElt = document.getElementsByClassName('medias')[0]
-  //Mieux elt in Obj ou hasOwnProperty()?
+function factoryMedia (actualPhotographer, media, container) {
+  const mediasElt = container
   if ('image' in media) {
     mediasElt.innerHTML += `<div class="card_media">
   <img src="img/${actualPhotographer.name}/${media.image}"></img>
@@ -100,7 +103,6 @@ function displayCardsTags (photographer) {
 
 function addEvents (mediaIMG, mediaVID) {
   mediaIMG.forEach((media) => media.addEventListener('click', (e) => {
-    console.log(media)
     const slider = document.querySelector('.slider')
     const main = document.querySelector('#second-page')
     const header = document.querySelector('header')
@@ -124,4 +126,37 @@ function addEvents (mediaIMG, mediaVID) {
   }))
 }
 
+function displayMediasSortedBy (sort, medias, container, photographer) {
+  switch (sort) {
+    case 'Popularité':
+      medias.sort((a, b) => b.likes - a.likes)
+      container.innerHTML = ''
+      medias.forEach(media => {
+        factoryMedia(photographer, media, container)
+      })
+      break
+    case 'Titre':
+      medias.sort((a, b) => a.title.localeCompare(b.title))
+      container.innerHTML = ''
+      medias.forEach(media => {
+        factoryMedia(photographer, media, container)
+      })
+      break
 
+    case 'Date':
+      medias.sort((a, b) => new Date(b.date) - new Date(a.date))
+      container.innerHTML = ''
+      medias.forEach(media => {
+        factoryMedia(photographer, media, container)
+      })
+      break
+
+    default:
+      medias.sort((a, b) => b.likes - a.likes)
+      container.innerHTML = ''
+      medias.forEach(media => {
+        factoryMedia(photographer, media, container)
+      })
+      break
+  }
+}
