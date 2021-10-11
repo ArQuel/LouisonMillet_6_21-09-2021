@@ -117,11 +117,11 @@ body {
 
 .slider .display video {
   width: 70%;
-  height: 100%;
+  height: 80%;
   position: absolute;
   right: 0%;
   left: 15%;
-  top: 0%;
+  top: 9%;
   bottom: 0%;
 }
 
@@ -168,6 +168,15 @@ body {
   cursor: pointer;
 }
 
+.slider p {
+  position: absolute;
+  color: #901C1C;
+  left: 15%;
+  bottom: 5%;
+  font-weight: bold;
+  font-size: 28px;
+}
+
 .medias {
   display: flex;
   flex-wrap: wrap;
@@ -187,7 +196,7 @@ body {
 .medias .card_media p {
   color: #901C1C;
   font-weight: bold;
-  font-size: 24px;
+  font-size: 20px;
   position: absolute;
   left: 0%;
   bottom: 0%;
@@ -203,12 +212,12 @@ body {
 .medias .card_media span {
   color: #901C1C;
   font-weight: bold;
-  font-size: 24px;
+  font-size: 20px;
 }
 
 .medias .card_media svg {
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
   padding-left: 10px;
   color: #901C1C;
 }

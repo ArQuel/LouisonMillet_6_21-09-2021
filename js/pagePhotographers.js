@@ -60,17 +60,17 @@ function displayDesc (photographers, url, medias) {
         displayMediasSortedBy(select.value, photographerMedias, mediasElt, actualPhotographer)
         const mediaIMG = document.querySelectorAll('img')
         const mediaVID = document.querySelectorAll('video')
-        addEvents(mediaIMG, mediaVID)
+        addEvents(mediaIMG, mediaVID, medias)
       })
     }
   }
 }
 
-function factoryMedia (actualPhotographer, media, container) {
+function factoryMedia (actualPhotographer, media, container, mediaIMG, mediaVID, medias) {
   const mediasElt = container
   if ('image' in media) {
     mediasElt.innerHTML += `<div class="card_media">
-  <img src="img/${actualPhotographer.name}/${media.image}"></img>
+  <img src="img/${actualPhotographer.name}/${media.image}" id=${media.id}></img>
   <p>${media.title}</p>
   <div>
   <span>
@@ -81,7 +81,7 @@ function factoryMedia (actualPhotographer, media, container) {
   </div>`
   } else if ('video' in media) {
     mediasElt.innerHTML += `<div class="card_media">
-    <video src="img/${actualPhotographer.name}/${media.video}"></video>
+    <video src="img/${actualPhotographer.name}/${media.video}" id=${media.id}></video>
     <p>${media.title}</p>
     <div>
     <span>
@@ -105,66 +105,68 @@ function displayCardsTags (photographer) {
 }
 
 function addEvents (mediaIMG, mediaVID, medias) {
-  mediaIMG.forEach((media) => media.addEventListener('click', (e) => {
-    // for (let index; index < medias.length; index++) {
-    //   console.log(medias[index].image, media.src)
-    //   if (medias[index].image === media.src) {
-    //     console.log('cc')
-    //   }
-    // }
-    const slider = document.querySelector('.slider')
-    const main = document.querySelector('#second-page')
-    const header = document.querySelector('header')
-    slider.innerHTML = ''
-    slider.style.display = 'flex'
-    main.style.filter = 'blur(10px)'
-    header.style.filter = 'blur(10px)'
+  const tableauIMG = []
+  medias.forEach((media) => {
+    if ('image' in media) {
+      tableauIMG[tableauIMG.length] = media
+    }
+  })
+  mediaIMG.forEach((img) => img.addEventListener('click', (e) => {
+    for (let index = 0; index < tableauIMG.length; index++) {
+      const indexImage = parseInt(img.id)
+      if (tableauIMG[index].id === indexImage) {
+        const slider = document.querySelector('.slider')
+        const main = document.querySelector('#second-page')
+        const header = document.querySelector('header')
+        slider.innerHTML = ''
+        slider.style.display = 'flex'
+        main.style.filter = 'blur(10px)'
+        header.style.filter = 'blur(10px)'
 
-    slider.innerHTML += `<div class='nav-btn prev-slide'></div>
-    <div class='display'><img src=${media.src}></img></div>
-    <p>${media.title}</p>
-    <div>
-    <span>
-    ${media.likes}
-    </span>
-    <i class="fas fa-heart"></i>
-    </div>
-    <div id="cross">X</div>
-    <div class='nav-btn next-slide'></div>`
-    const cross = document.querySelector('#cross')
-    cross.addEventListener('click', (e) => {
-      slider.style.display = 'none'
-      main.style.filter = 'blur(0px)'
-      header.style.filter = 'blur(0px)'
-      console.log(slider)
-    })
+        slider.innerHTML += `<div class='nav-btn prev-slide'></div>
+        <div class='display'><img src=${img.src}></img></div>
+        <p>${tableauIMG[index].title}</p>
+        <div id="cross">X</div>
+        <div class='nav-btn next-slide'></div>`
+        const cross = document.querySelector('#cross')
+        cross.addEventListener('click', (e) => {
+          slider.style.display = 'none'
+          main.style.filter = 'blur(0px)'
+          header.style.filter = 'blur(0px)'
+        })
+      }
+    }
   }))
-  mediaVID.forEach((media) => media.addEventListener('click', (e) => {
-    const slider = document.querySelector('.slider')
-    const main = document.querySelector('#second-page')
-    const header = document.querySelector('header')
-    slider.innerHTML = ''
-    slider.style.display = 'flex'
-    main.style.filter = 'blur(10px)'
-    header.style.filter = 'blur(10px)'
-    slider.innerHTML += `<div class='nav-btn prev-slide'></div>
-    <div class='display'><video controls src=${media.src}></video></div>
-    <p>${media.title}</p>
-    <div>
-    <span>
-    ${media.likes}
-    </span>
-    <i class="fas fa-heart"></i>
-    </div>
-    <div id="cross">X</div>
-    <div class='nav-btn next-slide'></div>`
-    const cross = document.querySelector('#cross')
-    cross.addEventListener('click', (e) => {
-      slider.style.display = 'none'
-      main.style.filter = 'blur(0px)'
-      header.style.filter = 'blur(0px)'
-      addEvents(mediaIMG, mediaVID)
-    })
+  const tableauVID = []
+  medias.forEach((media) => {
+    if ('video' in media) {
+      tableauVID[tableauVID.length] = media
+    }
+  })
+  mediaVID.forEach((video) => video.addEventListener('click', (e) => {
+    for (let index = 0; index < tableauVID.length; index++) {
+      const indexVideo = parseInt(video.id)
+      if (tableauVID[index].id === indexVideo) {
+        const slider = document.querySelector('.slider')
+        const main = document.querySelector('#second-page')
+        const header = document.querySelector('header')
+        slider.innerHTML = ''
+        slider.style.display = 'flex'
+        main.style.filter = 'blur(10px)'
+        header.style.filter = 'blur(10px)'
+        slider.innerHTML += `<div class='nav-btn prev-slide'></div>
+        <div class='display'><video controls src=${video.src}></video></div>
+        <p>${tableauVID[index].title}</p>
+        <div id="cross">X</div>
+        <div class='nav-btn next-slide'></div>`
+        const cross = document.querySelector('#cross')
+        cross.addEventListener('click', (e) => {
+          slider.style.display = 'none'
+          main.style.filter = 'blur(0px)'
+          header.style.filter = 'blur(0px)'
+        })
+      }
+    }
   }))
 }
 
