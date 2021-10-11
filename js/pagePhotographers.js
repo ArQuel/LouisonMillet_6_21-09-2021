@@ -55,18 +55,19 @@ function displayDesc (photographers, url, medias) {
       photographerMedias.sort((a, b) => b.likes - a.likes)
       displayMediasSortedBy('Popularité', photographerMedias, mediasElt, actualPhotographer)
       document.querySelector('select').addEventListener('change', (e) => {
-        console.log(mediasElt)
         const select = document.querySelector('select')
         displayMediasSortedBy(select.value, photographerMedias, mediasElt, actualPhotographer)
         const mediaIMG = document.querySelectorAll('img')
         const mediaVID = document.querySelectorAll('video')
         addEvents(mediaIMG, mediaVID, medias)
       })
+      const likes = document.querySelectorAll('.medias .card_media span')
+      displayPriceAndLikes(likes, actualPhotographer)
     }
   }
 }
 
-function factoryMedia (actualPhotographer, media, container, mediaIMG, mediaVID, medias) {
+function factoryMedia (actualPhotographer, media, container) {
   const mediasElt = container
   if ('image' in media) {
     mediasElt.innerHTML += `<div class="card_media">
@@ -203,4 +204,15 @@ function displayMediasSortedBy (sort, medias, container, photographer) {
       })
       break
   }
+}
+
+function displayPriceAndLikes (likes, photographer) {
+  let totalLikes = 0
+  const totalLikesElt = document.querySelector('#likes_and_price')
+  likes.forEach((like) => {
+    totalLikes = parseInt(like.innerText) + parseInt(totalLikes)
+  })
+  totalLikesElt.innerHTML += `<div><span>${totalLikes}</span>
+  <i class="fas fa-heart"></i></div>
+  <p>${photographer.price}€ /jour</p>`
 }

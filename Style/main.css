@@ -63,6 +63,29 @@ body {
   justify-content: center;
 }
 
+#likes_and_price {
+  position: fixed;
+  width: 376px;
+  height: 89px;
+  right: 0;
+  bottom: 0;
+  background-color: #DB8876;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+#likes_and_price div {
+  font-weight: bold;
+  font-size: 25px;
+  padding-right: 10px;
+}
+
+#likes_and_price p {
+  font-weight: bold;
+  font-size: 25px;
+}
+
 .select-container {
   display: flex;
 }
@@ -302,6 +325,10 @@ body {
   font-size: 22px;
   background-color: #901C1C;
   margin-top: 50px;
+}
+
+.photograph-header button:hover {
+  background-color: #D3573C;
 }
 
 .photograph-header div:nth-child(1) {
