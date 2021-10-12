@@ -7,6 +7,7 @@ retriveContent('data.json')
     const mediaIMG = document.querySelectorAll('.medias img')
     const mediaVID = document.querySelectorAll('.medias video')
     addEvents(mediaIMG, mediaVID, medias)
+    displayForm()
   })
   .catch(error => alert(error.message))
 
@@ -42,7 +43,7 @@ function displayDesc (photographers, url, medias) {
   </div>
 </div>
 <div>
-  <button>
+  <button id="button">
       Contactez-moi
   </button>
 </div>
@@ -215,4 +216,35 @@ function displayPriceAndLikes (likes, photographer) {
   totalLikesElt.innerHTML += `<div><span>${totalLikes}</span>
   <i class="fas fa-heart"></i></div>
   <p>${photographer.price}€ /jour</p>`
+}
+
+function displayForm () {
+  const button = document.querySelector('button')
+  console.log(button)
+  button.addEventListener('click', (e) => {
+    const fondForm = document.querySelector('.fondForm')
+    fondForm.innerHTML = `
+     <form>
+      <div>
+          <label for="firstname">Prénom</label>
+          <input type="text" id="name" name="user_name">
+      </div>
+      <div>
+          <label for="lastname">Nom</label>
+          <input type="text" id="name" name="user_name">
+      </div>
+     <div>
+          <label for="email">E-mail</label>
+          <input type="email" id="mail" name="user_mail">
+      </div>
+      <div>
+          <label for="msg">Votre message</label>
+          <textarea id="msg" name="user_message"></textarea>
+      </div>
+      <div class="buttonSubmit">
+          <button type="submit">Envoyer</button>
+      </div>
+    </form>
+    `
+  })
 }
