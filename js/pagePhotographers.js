@@ -1,9 +1,10 @@
 retriveContent('data.json')
   .then(data => {
-    const photographers = data.photographers
+    const photographerId = getPhotopgraherId()
+    const photographer = data.photographers.find(elt => elt.id === photographerId)
     const url = document.location.search
-    const medias = data.media
-    displayDesc(photographers, url, medias)
+    const medias = data.media.filter(elt => elt.photographerId === photographerId)
+    displayDesc(photographer, url, medias)
     const mediaIMG = document.querySelectorAll('.medias img')
     const mediaVID = document.querySelectorAll('.medias video')
     addEvents(mediaIMG, mediaVID, medias)
@@ -21,22 +22,23 @@ async function retriveContent (url) {
   }
 }
 
-function displayDesc (photographers, url, medias) {
+function getPhotopgraherId () {
+  const query = window.location.search
+  const urlParams = new URLSearchParams(query)
+  return parseInt(urlParams.get('id'))
+}
+
+function displayDesc (actualPhotographer, url, medias) {
   const photographHeader = document.getElementsByClassName('photograph-header')[0]
-  let id = url.substring(url.lastIndexOf(' = ') + 5)
-  id = parseInt(id)
-  for (let i = 0; i < photographers.length; i++) {
-    if (photographers[i].id === id) {
-      const actualPhotographer = photographers[i]
-      photographHeader.innerHTML += `<div>
+  photographHeader.innerHTML += `<div>
   <h1>
       ${actualPhotographer.name}
   </h1>
   <p>
-      ${photographers[i].city}, ${photographers[i].country}
+      ${actualPhotographer.city}, ${actualPhotographer.country}
   </p>
   <p>
-      ${photographers[i].tagline}
+      ${actualPhotographer.tagline}
   </p>
   <div class="tagsList">
       
@@ -48,24 +50,22 @@ function displayDesc (photographers, url, medias) {
   </button>
 </div>
 <div>
-  <img src="${photographers[i].portrait}">
+  <img src="${actualPhotographer.portrait}">
 </div>`
-      displayCardsTags(actualPhotographer)
-      const photographerMedias = medias.filter(elt => elt.photographerId === actualPhotographer.id)
-      const mediasElt = document.getElementsByClassName('medias')[0]
-      photographerMedias.sort((a, b) => b.likes - a.likes)
-      displayMediasSortedBy('Popularité', photographerMedias, mediasElt, actualPhotographer)
-      document.querySelector('select').addEventListener('change', (e) => {
-        const select = document.querySelector('select')
-        displayMediasSortedBy(select.value, photographerMedias, mediasElt, actualPhotographer)
-        const mediaIMG = document.querySelectorAll('img')
-        const mediaVID = document.querySelectorAll('video')
-        addEvents(mediaIMG, mediaVID, medias)
-      })
-      const likes = document.querySelectorAll('.medias .card_media span')
-      displayPriceAndLikes(likes, actualPhotographer)
-    }
-  }
+  displayCardsTags(actualPhotographer)
+  const photographerMedias = medias.filter(elt => elt.photographerId === actualPhotographer.id)
+  const mediasElt = document.getElementsByClassName('medias')[0]
+  photographerMedias.sort((a, b) => b.likes - a.likes)
+  displayMediasSortedBy('Popularité', photographerMedias, mediasElt, actualPhotographer)
+  document.querySelector('select').addEventListener('change', (e) => {
+    const select = document.querySelector('select')
+    displayMediasSortedBy(select.value, photographerMedias, mediasElt, actualPhotographer)
+    const mediaIMG = document.querySelectorAll('img')
+    const mediaVID = document.querySelectorAll('video')
+    addEvents(mediaIMG, mediaVID, medias, photographerMedias, actualPhotographer)
+  })
+  const likes = document.querySelectorAll('.medias .card_media span')
+  displayPriceAndLikes(likes, actualPhotographer)
 }
 
 function factoryMedia (actualPhotographer, media, container) {
@@ -107,69 +107,103 @@ function displayCardsTags (photographer) {
 }
 
 function addEvents (mediaIMG, mediaVID, medias) {
+  const slider = document.querySelector('.slider')
+  const main = document.querySelector('#second-page')
+  const header = document.querySelector('header')
   const tableauIMG = []
+
   medias.forEach((media) => {
     if ('image' in media) {
       tableauIMG[tableauIMG.length] = media
     }
   })
-  mediaIMG.forEach((img) => img.addEventListener('click', (e) => {
-    for (let index = 0; index < tableauIMG.length; index++) {
-      const indexImage = parseInt(img.id)
-      if (tableauIMG[index].id === indexImage) {
-        const slider = document.querySelector('.slider')
-        const main = document.querySelector('#second-page')
-        const header = document.querySelector('header')
-        slider.innerHTML = ''
-        slider.style.display = 'flex'
-        main.style.filter = 'blur(10px)'
-        header.style.filter = 'blur(10px)'
-
-        slider.innerHTML += `<div class='nav-btn prev-slide'></div>
-        <div class='display'><img src=${img.src}></img></div>
-        <p>${tableauIMG[index].title}</p>
-        <div id="cross">X</div>
-        <div class='nav-btn next-slide'></div>`
-        const cross = document.querySelector('#cross')
-        cross.addEventListener('click', (e) => {
-          slider.style.display = 'none'
-          main.style.filter = 'blur(0px)'
-          header.style.filter = 'blur(0px)'
-        })
-      }
-    }
-  }))
   const tableauVID = []
   medias.forEach((media) => {
     if ('video' in media) {
       tableauVID[tableauVID.length] = media
     }
   })
-  mediaVID.forEach((video) => video.addEventListener('click', (e) => {
-    for (let index = 0; index < tableauVID.length; index++) {
-      const indexVideo = parseInt(video.id)
-      if (tableauVID[index].id === indexVideo) {
-        const slider = document.querySelector('.slider')
-        const main = document.querySelector('#second-page')
-        const header = document.querySelector('header')
-        slider.innerHTML = ''
-        slider.style.display = 'flex'
-        main.style.filter = 'blur(10px)'
-        header.style.filter = 'blur(10px)'
-        slider.innerHTML += `<div class='nav-btn prev-slide'></div>
-        <div class='display'><video controls src=${video.src}></video></div>
-        <p>${tableauVID[index].title}</p>
-        <div id="cross">X</div>
-        <div class='nav-btn next-slide'></div>`
-        const cross = document.querySelector('#cross')
-        cross.addEventListener('click', (e) => {
-          slider.style.display = 'none'
-          main.style.filter = 'blur(0px)'
-          header.style.filter = 'blur(0px)'
+
+  // Trier tableau des medias pour slider
+
+  const tableauMedias = tableauIMG.concat(tableauVID)
+  const select = document.querySelector('select')
+  trierSlider(select.value, tableauMedias)
+
+  // imgforeach
+
+  mediaIMG.forEach((img) => img.addEventListener('click', (e) => {
+    displayIMG(img, tableauIMG, tableauMedias)
+    tableauMedias.forEach((index) => {
+      if (index.id === parseInt(img.id)) {
+        let position = tableauMedias.indexOf(index)
+        const next = document.querySelector('#nextSlide')
+        next.addEventListener('click', (e) => {
+          position = position + 1
+          console.log(position)
         })
       }
-    }
+    })
+    const cross = document.querySelector('#cross')
+    cross.addEventListener('click', (e) => {
+      slider.style.display = 'none'
+      main.style.filter = 'blur(0px)'
+      header.style.filter = 'blur(0px)'
+    })
+    
   }))
+
+  // vidforeach
+
+  mediaVID.forEach((video) => video.addEventListener('click', (e) => {
+    tableauMedias.push(video)
+    displayVID(video, tableauVID, tableauMedias)
+    const cross = document.querySelector('#cross')
+    cross.addEventListener('click', (e) => {
+      slider.style.display = 'none'
+      main.style.filter = 'blur(0px)'
+      header.style.filter = 'blur(0px)'
+    })
+    const next = document.querySelector('#nextSlide')
+    next.addEventListener('click', (e) => {
+    })
+  }))
+}
+
+function displayIMG (img, tableauIMG) {
+  const indexImage = parseInt(img.id)
+  const index = tableauIMG.findIndex(elt => elt.id === indexImage)
+  const image = tableauIMG[index]
+  const slider = document.querySelector('.slider')
+  const main = document.querySelector('#second-page')
+  const header = document.querySelector('header')
+  slider.innerHTML = ''
+  slider.style.display = 'flex'
+  main.style.filter = 'blur(10px)'
+  header.style.filter = 'blur(10px)'
+  slider.innerHTML += `<div class='nav-btn prev-slide'></div>
+        <div class='display'><img src=${img.src}></img></div>
+        <p>${image.title}</p>
+        <div id="cross">X</div>
+        <div class='nav-btn next-slide' id='nextSlide'></div>`
+}
+
+function displayVID (vid, tableauVID, tableauMedias) {
+  const indexVideo = parseInt(vid.id)
+  const index = tableauVID.findIndex(elt => elt.id === indexVideo)
+  const video = tableauVID[index]
+  const slider = document.querySelector('.slider')
+  const main = document.querySelector('#second-page')
+  const header = document.querySelector('header')
+  slider.innerHTML = ''
+  slider.style.display = 'flex'
+  main.style.filter = 'blur(10px)'
+  header.style.filter = 'blur(10px)'
+  slider.innerHTML += `<div class='nav-btn prev-slide'></div>
+        <div class='display'><video controls src=${vid.src}></video></div>
+        <p>${video.title}</p>
+        <div id="cross">X</div>
+        <div class='nav-btn next-slide' id='nextSlide'></div>`
 }
 
 function displayMediasSortedBy (sort, medias, container, photographer) {
@@ -207,6 +241,26 @@ function displayMediasSortedBy (sort, medias, container, photographer) {
   }
 }
 
+function trierSlider (sort, medias) {
+  switch (sort) {
+    case 'Popularité':
+      medias.sort((a, b) => b.likes - a.likes)
+      break
+
+    case 'Titre':
+      medias.sort((a, b) => a.title.localeCompare(b.title))
+      break
+
+    case 'Date':
+      medias.sort((a, b) => new Date(b.date) - new Date(a.date))
+      break
+
+    default:
+      medias.sort((a, b) => b.likes - a.likes)
+      break
+  }
+}
+
 function displayPriceAndLikes (likes, photographer) {
   let totalLikes = 0
   const totalLikesElt = document.querySelector('#likes_and_price')
@@ -220,7 +274,6 @@ function displayPriceAndLikes (likes, photographer) {
 
 function displayForm () {
   const button = document.querySelector('button')
-  console.log(button)
   button.addEventListener('click', (e) => {
     const fondForm = document.querySelector('.fondForm')
     fondForm.innerHTML = `
