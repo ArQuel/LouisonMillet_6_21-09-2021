@@ -2,12 +2,11 @@ retriveContent('data.json')
   .then(data => {
     const photographerId = getPhotopgraherId()
     const photographer = data.photographers.find(elt => elt.id === photographerId)
-    const url = document.location.search
     const medias = data.media.filter(elt => elt.photographerId === photographerId)
-    displayDesc(photographer, url, medias)
+    displayDesc(photographer, medias)
     const mediaIMG = document.querySelectorAll('.medias img')
     const mediaVID = document.querySelectorAll('.medias video')
-    addEvents(mediaIMG, mediaVID, medias)
+    addSlider(mediaIMG, mediaVID, medias, photographer)
     displayForm()
   })
   .catch(error => alert(error.message))
@@ -28,7 +27,7 @@ function getPhotopgraherId () {
   return parseInt(urlParams.get('id'))
 }
 
-function displayDesc (actualPhotographer, url, medias) {
+function displayDesc (actualPhotographer, medias) {
   const photographHeader = document.getElementsByClassName('photograph-header')[0]
   photographHeader.innerHTML += `<div>
   <h1>
@@ -62,7 +61,7 @@ function displayDesc (actualPhotographer, url, medias) {
     displayMediasSortedBy(select.value, photographerMedias, mediasElt, actualPhotographer)
     const mediaIMG = document.querySelectorAll('img')
     const mediaVID = document.querySelectorAll('video')
-    addEvents(mediaIMG, mediaVID, medias, photographerMedias, actualPhotographer)
+    addSlider(mediaIMG, mediaVID, medias, photographerMedias, actualPhotographer)
   })
   const likes = document.querySelectorAll('.medias .card_media span')
   displayPriceAndLikes(likes, actualPhotographer)
@@ -106,10 +105,8 @@ function displayCardsTags (photographer) {
   }
 }
 
-function addEvents (mediaIMG, mediaVID, medias) {
+function addSlider (mediaIMG, mediaVID, medias, photographer) {
   const slider = document.querySelector('.slider')
-  const main = document.querySelector('#second-page')
-  const header = document.querySelector('header')
   const tableauIMG = []
 
   medias.forEach((media) => {
@@ -133,24 +130,13 @@ function addEvents (mediaIMG, mediaVID, medias) {
   // imgforeach
 
   mediaIMG.forEach((img) => img.addEventListener('click', (e) => {
-    displayIMG(img, tableauIMG, tableauMedias)
+    displayIMG(img, tableauIMG)
     tableauMedias.forEach((index) => {
       if (index.id === parseInt(img.id)) {
         let position = tableauMedias.indexOf(index)
-        const next = document.querySelector('#nextSlide')
-        next.addEventListener('click', (e) => {
-          position = position + 1
-          console.log(position)
-        })
+        position = addEventOnLayout(position, tableauMedias, photographer, slider)
       }
     })
-    const cross = document.querySelector('#cross')
-    cross.addEventListener('click', (e) => {
-      slider.style.display = 'none'
-      main.style.filter = 'blur(0px)'
-      header.style.filter = 'blur(0px)'
-    })
-    
   }))
 
   // vidforeach
@@ -158,16 +144,99 @@ function addEvents (mediaIMG, mediaVID, medias) {
   mediaVID.forEach((video) => video.addEventListener('click', (e) => {
     tableauMedias.push(video)
     displayVID(video, tableauVID, tableauMedias)
+    tableauMedias.forEach((index) => {
+      if (index.id === parseInt(video.id)) {
+        let position = tableauMedias.indexOf(index)
+        position = addEventOnLayout(position, tableauMedias, photographer, slider)
+      }
+    })
+  }))
+}
+
+function addEventOnLayout (position, tableauMedias, photographer, slider) {
+  const next = document.querySelector('#nextSlide')
+  next.addEventListener('click', (e) => {
+    position = position + 1
+    nextSlide(tableauMedias, position, photographer)
     const cross = document.querySelector('#cross')
     cross.addEventListener('click', (e) => {
       slider.style.display = 'none'
-      main.style.filter = 'blur(0px)'
-      header.style.filter = 'blur(0px)'
     })
-    const next = document.querySelector('#nextSlide')
-    next.addEventListener('click', (e) => {
+  })
+  const prev = document.querySelector('#prevSlide')
+  prev.addEventListener('click', (e) => {
+    position = position - 1
+    prevSlide(tableauMedias, position, photographer)
+    const cross = document.querySelector('#cross')
+    cross.addEventListener('click', (e) => {
+      slider.style.display = 'none'
     })
-  }))
+  })
+  return position
+}
+
+function prevSlide (tableauMedias, position, photographer) {
+  if (position >= 0) {
+    if ('image' in tableauMedias[position]) {
+      const slider = document.querySelector('.slider')
+      slider.innerHTML = ''
+      const lienPhoto = 'img/' + photographer.name + '/' + tableauMedias[position].image
+      slider.style.display = 'flex'
+      slider.innerHTML += `<div class='nav-btn prev-slide' id='prevSlide'></div>
+          <div class='display'><img src="${lienPhoto}"></div>
+          <p>${tableauMedias[position].title}</p>
+          <div id="cross">X</div>
+          <div class='nav-btn next-slide' id='nextSlide'></div>`
+      addEventOnLayout(position, tableauMedias, photographer, slider)
+    }
+    if ('video' in tableauMedias[position]) {
+      const slider = document.querySelector('.slider')
+      slider.innerHTML = ''
+      const lienVID = 'img/' + photographer.name + '/' + tableauMedias[position].video
+      slider.style.display = 'flex'
+      slider.innerHTML += `<div class='nav-btn prev-slide' id='prevSlide'></div>
+      <div class='display'><video controls src="${lienVID}"></video></div>
+      <p>${tableauMedias[position].title}</p>
+      <div id="cross">X</div>
+      <div class='nav-btn next-slide' id='nextSlide'></div>`
+      addEventOnLayout(position, tableauMedias, photographer, slider)
+    }
+  } else {
+    position = tableauMedias.length - 1
+    prevSlide(tableauMedias, position, photographer)
+  }
+}
+
+function nextSlide (tableauMedias, position, photographer) {
+  if (position < tableauMedias.length) {
+    if ('image' in tableauMedias[position]) {
+      const slider = document.querySelector('.slider')
+      slider.innerHTML = ''
+      const lienPhoto = 'img/' + photographer.name + '/' + tableauMedias[position].image
+      slider.style.display = 'flex'
+      slider.innerHTML += `<div class='nav-btn prev-slide' id='prevSlide'></div>
+          <div class='display'><img src="${lienPhoto}"></div>
+          <p>${tableauMedias[position].title}</p>
+          <div id="cross">X</div>
+          <div class='nav-btn next-slide' id='nextSlide'></div>`
+      addEventOnLayout(position, tableauMedias, photographer, slider)
+    }
+    if ('video' in tableauMedias[position]) {
+      const slider = document.querySelector('.slider')
+      slider.innerHTML = ''
+      const lienVID = 'img/' + photographer.name + '/' + tableauMedias[position].video
+      slider.style.display = 'flex'
+      slider.innerHTML += `<div class='nav-btn prev-slide' id='prevSlide'></div>
+      <div class='display'><video controls src="${lienVID}"></video></div>
+      <p>${tableauMedias[position].title}</p>
+      <div id="cross">X</div>
+      <div class='nav-btn next-slide' id='nextSlide'></div>`
+      addEventOnLayout(position, tableauMedias, photographer, slider)
+    }
+  } else {
+    position = 0
+    nextSlide(tableauMedias, position, photographer)
+  }
 }
 
 function displayIMG (img, tableauIMG) {
@@ -175,14 +244,10 @@ function displayIMG (img, tableauIMG) {
   const index = tableauIMG.findIndex(elt => elt.id === indexImage)
   const image = tableauIMG[index]
   const slider = document.querySelector('.slider')
-  const main = document.querySelector('#second-page')
-  const header = document.querySelector('header')
   slider.innerHTML = ''
   slider.style.display = 'flex'
-  main.style.filter = 'blur(10px)'
-  header.style.filter = 'blur(10px)'
-  slider.innerHTML += `<div class='nav-btn prev-slide'></div>
-        <div class='display'><img src=${img.src}></img></div>
+  slider.innerHTML += `<div class='nav-btn prev-slide' id='prevSlide'></div>
+        <div class='display'><img src="${img.src}"></img></div>
         <p>${image.title}</p>
         <div id="cross">X</div>
         <div class='nav-btn next-slide' id='nextSlide'></div>`
@@ -193,14 +258,10 @@ function displayVID (vid, tableauVID, tableauMedias) {
   const index = tableauVID.findIndex(elt => elt.id === indexVideo)
   const video = tableauVID[index]
   const slider = document.querySelector('.slider')
-  const main = document.querySelector('#second-page')
-  const header = document.querySelector('header')
   slider.innerHTML = ''
   slider.style.display = 'flex'
-  main.style.filter = 'blur(10px)'
-  header.style.filter = 'blur(10px)'
-  slider.innerHTML += `<div class='nav-btn prev-slide'></div>
-        <div class='display'><video controls src=${vid.src}></video></div>
+  slider.innerHTML += `<div class='nav-btn prev-slide' id='prevSlide'></div>
+        <div class='display'><video controls src="${vid.src}"></video></div>
         <p>${video.title}</p>
         <div id="cross">X</div>
         <div class='nav-btn next-slide' id='nextSlide'></div>`
