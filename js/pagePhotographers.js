@@ -7,7 +7,7 @@ retriveContent('data.json')
     const mediaIMG = document.querySelectorAll('.medias img')
     const mediaVID = document.querySelectorAll('.medias video')
     addSlider(mediaIMG, mediaVID, medias, photographer)
-    displayForm()
+    displayForm(photographer)
   })
   .catch(error => alert(error.message))
 
@@ -44,7 +44,7 @@ function displayDesc (actualPhotographer, medias) {
   </div>
 </div>
 <div>
-  <button id="button">
+  <button id="buttonOpen">
       Contactez-moi
   </button>
 </div>
@@ -151,19 +151,29 @@ function displayPriceAndLikes (likes, photographer) {
   <p>${photographer.price}€ /jour</p>`
 }
 
-function displayForm () {
-  const button = document.querySelector('button')
-  button.addEventListener('click', (e) => {
-    const fondForm = document.querySelector('.fondForm')
+function displayForm (photographer) {
+  const buttonOpen = document.querySelector('#buttonOpen')
+  const main = document.querySelector('main')
+  const likesAndPrices = document.querySelector('#likes_and_price')
+  const fondForm = document.querySelector('.fondForm')
+  const contentbg = document.querySelector('.bgroundForm')
+  buttonOpen.addEventListener('click', (e) => {
+    contentbg.style.display = 'block'
+    main.style.opacity = '0.5'
+    likesAndPrices.style.filter = 'blur(5px)'
+    main.style.filter = 'blur(5px)'
+    fondForm.style.display = 'block'
     fondForm.innerHTML = `
-     <form>
+     <form id="validation">
       <div>
+          <h1>Contactez-moi</h1>
+          <h2>${photographer.name}</h2>
           <label for="firstname">Prénom</label>
-          <input type="text" id="name" name="user_name">
+          <input type="text" id="user_firstname" name="user_firstname">
       </div>
       <div>
           <label for="lastname">Nom</label>
-          <input type="text" id="name" name="user_name">
+          <input type="text" id="user_lastname" name="user_lastname">
       </div>
      <div>
           <label for="email">E-mail</label>
@@ -171,14 +181,108 @@ function displayForm () {
       </div>
       <div>
           <label for="msg">Votre message</label>
-          <textarea id="msg" name="user_message"></textarea>
+          <textarea id="user_mail" name="user_message"></textarea>
       </div>
+      <div id="crossForm">X</div>
+
       <div class="buttonSubmit">
-          <button type="submit">Envoyer</button>
+          <button type="submit" id="#buttonSend">Envoyer</button>
       </div>
     </form>
     `
+    const cross = document.querySelector('#crossForm')
+    cross.addEventListener('click', (e) => {
+      fondForm.style.display = 'none'
+      main.style.opacity = '1'
+      likesAndPrices.style.filter = 'blur(0px)'
+      main.style.filter = 'blur(0px)'
+      displayForm(photographer)
+    })
+    const verifFirst = false
+    const verifLast = false
+    const verifEmail = false
+    const validation = document.querySelector('#validation')
+    validation.addEventListener('submit', (e) => validate(e, verifFirst, verifLast, verifEmail))
   })
+}
+
+function checkTextInput (input) {
+  const regText = /^[-'a-zA-ZÀ-ÖØ-öø-ÿ]+$/gm
+  let isOk = false
+  if (regText.test(input.value) && input.value.length >= 2) {
+    isOk = true
+    return isOk
+  }
+  isOk = false
+  alert('veuillez saisir au moins deux lettres dans votre nom et prénom')
+  return isOk
+}
+
+function checkEmailInput (input) {
+  const regEmail = /^[\w\-\+]+(\.[\w\-]+)*@[\w\-]+(\.[\w\-]+)*\.[\w\-]{2,4}$/
+  const isOk = regEmail.test(input.value)
+  if (!isOk || input.value === '') {
+    return true
+  } else {
+    alert('Veuillez rentrer un mail correct')
+  }
+  return false
+}
+
+function reinitInputs () {
+  document.querySelector("input[name='user_firstname']").value = ''
+  document.querySelector("input[name='user_lastname']").value = ''
+  document.querySelector("input[name='user_mail']").value = ''
+  document.querySelector("textarea[name='user_message']").value = ''
+}
+
+function validateMessage () {
+  const formulaire = document.querySelector('form')
+  console.log(formulaire)
+  formulaire.style.display = 'none'
+
+  const valide = document.createElement('p')
+  const contentbg = document.querySelector('.bgroundForm')
+  const newWindow = document.createElement('div')
+  contentbg.appendChild(newWindow)
+  newWindow.appendChild(valide)
+  newWindow.style.display = 'flex'
+  valide.textContent = 'Message envoyé'
+  valide.style.fontSize = '45px'
+  valide.style.color = 'white'
+  valide.style.fontWeight = 'bold'
+  valide.style.display = 'block'
+  const buttonBack = document.createElement('button')
+  buttonBack.className = 'button'
+  buttonBack.textContent = 'Retour'
+  newWindow.appendChild(buttonBack)
+  buttonBack.addEventListener('click', () => {
+    const main = document.querySelector('main')
+    const likesAndPrices = document.querySelector('#likes_and_price')
+    const fondForm = document.querySelector('.fondForm')
+    contentbg.style.display = 'none'
+    fondForm.style.display = 'none'
+    main.style.opacity = '1'
+    likesAndPrices.style.filter = 'blur(0px)'
+    main.style.filter = 'blur(0px)'
+    newWindow.style.display = 'none'
+  })
+}
+
+function validate (event, verifFirst, verifLast, verifEmail) {
+  event.preventDefault()
+  const firstName = document.querySelector('#user_firstname')
+  const lastName = document.querySelector('#user_lastname')
+  const email = document.querySelector('#user_mail')
+  verifFirst = checkTextInput(firstName)
+  verifLast = checkTextInput(lastName)
+  verifEmail = checkEmailInput(email)
+  if (verifFirst && verifLast && verifEmail) {
+    reinitInputs()
+    validateMessage()
+  } else {
+    alert("Erreur lors de l'envoi du message")
+  }
 }
 
 // Display Slider

@@ -59,7 +59,7 @@
         border-radius: 100%;
     }
 
-    button{
+    #buttonOpen{
         cursor: pointer;
         width: 170px;
         height: 69px;
@@ -71,7 +71,7 @@
         margin-top: 50px;
     }
 
-    button:hover{
+    #buttonOpen:hover{
         background-color: $secondary-color;
     }
 
