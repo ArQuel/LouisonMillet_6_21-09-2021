@@ -1,33 +1,107 @@
 .select-container{
     display: flex;
+    width: 100%;
+    margin: auto;
+    height: 41px;
+    margin-bottom: 135px;
+
+
 
     p {
         margin-left: 4%;
         margin-right: 20px;
         font-size: 22px;
         font-weight: bold;
-        padding-top: 15px;
     }
+//     select {
+//         padding-left: 30px;
+//         border: none;
+//         color: white;
+//         font-weight: bold;
+//         font-size: 18px;
+//         width: 170px;
+//         height: calc(170px / 3);
+//         background-color: $primary-color;
+//     }
 
-    select {
-        padding-left: 30px;
-        border: none;
-        color: white;
-        font-weight: bold;
-        font-size: 18px;
-        width: 170px;
-        height: calc(170px / 3);
-        background-color: $primary-color;
-    }
-
-    option {
-        color: white;
-        font-weight: bold;
-        font-size: 18px;
-        padding-top: 10px;
-        line-height: 500px;
-    }   
+//     option {
+//         color: white;
+//         font-weight: bold;
+//         font-size: 18px;
+//         padding-top: 10px;
+//         line-height: 500px;
+//     }   
 
 }
 
 
+.custom-select {
+    position: relative;
+    font-weight: bold;
+    font-size: 20px;
+  }
+  
+  .custom-select select {
+    display: none; 
+  }
+  
+  .select-selected {
+    background-color: $primary-color;
+    width: 162px;
+    position: absolute;
+    top: -19px;
+  }
+
+  .select-selected:hover {
+      background-color: $secondary-color;
+  }
+  
+  /* Style the arrow inside the select element: */
+  .select-selected:after {
+    position: absolute;
+    content: "";
+    top: 27px;
+    right: 21px;
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-color: #fff transparent transparent transparent;
+  }
+  
+  /* Point the arrow upwards when the select box is open (active): */
+  .select-selected.select-arrow-active:after {
+    border-color: transparent transparent #fff transparent;
+    top: 19px;
+  }
+  
+  /* style the items (options), including the selected item: */
+  .select-items div,.select-selected {
+    color: #ffffff;
+    padding: 8px 16px;
+    border: 1px solid transparent;
+    border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+    cursor: pointer;
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-bottom: 20px;
+  }
+  
+  
+  /* Style items (options): */
+  .select-items {
+    position: absolute;
+    background-color: $primary-color;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 99;
+  }
+  
+  /* Hide the items when the select box is closed: */
+  .select-hide {
+    display: none;
+  }
+  
+  .select-items div:hover, .same-as-selected {
+    background-color: $secondary-color
+  }

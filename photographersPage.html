@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="Style/main.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap');
+        </style>
     <script type="module" src="js/pagePhotographers.js"></script>
     <script defer src="/node_modules/@fortawesome/fontawesome-free/js/brands.js"></script>
     <script defer src="/node_modules/@fortawesome/fontawesome-free/js/solid.js"></script>
@@ -19,14 +22,24 @@
     <main id="second-page">
             <section class="photograph-header">
             </section>
-            <div class="select-container">
-                <p>Trier par :</p>
+        <div class="select-container">
+            <p>Trier par :</p>
+                <!-- <p>Trier par :</p>
                 <select class=form-control>
                     <option value=Popularité>Popularité</option>
                     <option value=Date>Date</option>
                     <option value=Titre>Titre</option>
-                   </select>
+                   </select> -->
+            <div class="custom-select" style="width:200px;">
+                <select>
+                  <option value="">Popularité</option>
+                  <option value="Popularité">Popularité</option>
+                  <option value="Date">Date</option>
+                  <option value="Titre">Titre</option>
+                </select>
             </div>
+        </div>
+
             <section class="medias">
             </section>
     </main>

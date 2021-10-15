@@ -56,12 +56,12 @@ function displayDesc (actualPhotographer, medias) {
   const mediasElt = document.getElementsByClassName('medias')[0]
   photographerMedias.sort((a, b) => b.likes - a.likes)
   displayMediasSortedBy('Popularité', photographerMedias, mediasElt, actualPhotographer)
-  document.querySelector('select').addEventListener('change', (e) => {
-    const select = document.querySelector('select')
-    displayMediasSortedBy(select.value, photographerMedias, mediasElt, actualPhotographer)
+  document.querySelector('.select-selected').addEventListener('click', (e) => {
+    const select = document.querySelectorAll('.select-selected')[0]
+    displayMediasSortedBy(select.textContent, photographerMedias, mediasElt, actualPhotographer)
     const mediaIMG = document.querySelectorAll('img')
     const mediaVID = document.querySelectorAll('video')
-    addSlider(mediaIMG, mediaVID, medias, photographerMedias, actualPhotographer)
+    addSlider(mediaIMG, mediaVID, photographerMedias, actualPhotographer)
   })
   const likes = document.querySelectorAll('.medias .card_media span')
   displayPriceAndLikes(likes, actualPhotographer)
@@ -219,7 +219,7 @@ function checkTextInput (input) {
 }
 
 function checkEmailInput (input) {
-  const regEmail = /^[\w\-\+]+(\.[\w\-]+)*@[\w\-]+(\.[\w\-]+)*\.[\w\-]{2,4}$/
+  const regEmail = /^[\w\-\\+]+(\.[\w\\-]+)*@[\w\\-]+(\.[\w\\-]+)*\.[\w\\-]{2,4}$/
   const isOk = regEmail.test(input.value)
   if (!isOk || input.value === '') {
     return true
@@ -386,7 +386,6 @@ function prevSlide (tableauMedias, position, photographer) {
 function nextSlide (tableauMedias, position, photographer) {
   if (position < tableauMedias.length) {
     if ('image' in tableauMedias[position]) {
-      console.log(position)
       const slider = document.querySelector('.slider')
       slider.innerHTML = ''
       const lienPhoto = 'img/' + photographer.name + '/' + tableauMedias[position].image
@@ -468,3 +467,87 @@ function trierSlider (sort, medias) {
       break
   }
 }
+
+/* Chercher les éléments avec custom-select */
+let i
+let j
+let ll
+let selElmnt
+let a, b, c
+const x = document.getElementsByClassName('custom-select')
+const l = x.length
+for (i = 0; i < l; i++) {
+  selElmnt = x[i].getElementsByTagName('select')[0]
+  ll = selElmnt.length
+  /* Pour chaque élément créer une nouvelle div qui agira comme un élément select */
+  a = document.createElement('DIV')
+  a.setAttribute('class', 'select-selected')
+  a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML
+  x[i].appendChild(a)
+  /* Pour chaque élément créer une nouvelle div qui contiendra la liste des options */
+  b = document.createElement('DIV')
+  b.setAttribute('class', 'select-items select-hide')
+  for (j = 1; j < ll; j++) {
+    /* Pour chaque option dans l'élément select original, crée une nouvelle div qui agira comme une option */
+    c = document.createElement('DIV')
+    c.innerHTML = selElmnt.options[j].innerHTML
+    c.addEventListener('click', function (e) {
+      /* Quand un élément est cliqué, met à jour */
+      let y
+      let i
+      let k
+      let yl
+      const s = this.parentNode.parentNode.getElementsByTagName('select')[0]
+      const sl = s.length
+      const h = this.parentNode.previousSibling
+      for (i = 0; i < sl; i++) {
+        if (s.options[i].innerHTML === this.innerHTML) {
+          s.selectedIndex = i
+          h.innerHTML = this.innerHTML
+          y = this.parentNode.getElementsByClassName('same-as-selected')
+          yl = y.length
+          for (k = 0; k < yl; k++) {
+            y[k].removeAttribute('class')
+          }
+          this.setAttribute('class', 'same-as-selected')
+          break
+        }
+      }
+      h.click()
+    })
+    b.appendChild(c)
+  }
+  x[i].appendChild(b)
+  a.addEventListener('click', function (e) {
+    /* Quand le select est cliqué, ferme tous les autres select et ouvre/ferme celle actuelle */
+    e.stopPropagation()
+    closeAllSelect(this)
+    this.nextSibling.classList.toggle('select-hide')
+    this.classList.toggle('select-arrow-active')
+  })
+}
+
+function closeAllSelect (elmnt) {
+  /* Fonction qui va fermer toutes les select box sauf l'actuelle */
+  let i
+  const arrNo = []
+  const x = document.getElementsByClassName('select-items')
+  const y = document.getElementsByClassName('select-selected')
+  const xl = x.length
+  const yl = y.length
+  for (i = 0; i < yl; i++) {
+    if (elmnt === y[i]) {
+      arrNo.push(i)
+    } else {
+      y[i].classList.remove('select-arrow-active')
+    }
+  }
+  for (i = 0; i < xl; i++) {
+    if (arrNo.indexOf(i)) {
+      x[i].classList.add('select-hide')
+    }
+  }
+}
+
+/* Si l'utilisateur clique partout, ferme la selectbox */
+document.addEventListener('click', closeAllSelect)
