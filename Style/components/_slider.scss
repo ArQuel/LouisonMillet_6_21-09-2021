@@ -85,6 +85,29 @@
       }
   }
 
+  @media screen and (max-width: 900px) {
+
+  .slider .prev-slide:after{
+      padding: 0;
+      font-size: 2rem;
+  }
+
+  .slider .next-slide:after{
+    padding: 0;
+    font-size: 2rem;
+  }
+
+  .slider #cross{
+      top: 18%;
+      right: 12%;
+      font-size: 25px;
+  }
+
+  .slider p{
+      font-size: 15px;
+  }
+
+}
   
 
 

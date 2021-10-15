@@ -41,7 +41,7 @@ function displayCards (photographers) {
   for (let i = 0; i < photographers.length; i++) {
     cardsElt.innerHTML += `<article class="card_photographer">
       <a href="/photographersPage.html?id=${photographers[i].id}">
-          <img src="${photographers[i].portrait}">
+          <img src="${photographers[i].portrait}" alt=${photographers[i].name}>
           <h2>
               ${photographers[i].name}
           </h2>

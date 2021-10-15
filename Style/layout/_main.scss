@@ -4,7 +4,15 @@ body {
 
 #title{
     position: absolute;
-    right: 5em;
     top: 0.7em;
+    right: 5%;
     color: $primary-color;
+}
+
+
+@media screen and (max-width: 900px) {
+
+    #title {
+        right: 1%;
+    }
 }

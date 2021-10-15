@@ -40,6 +40,9 @@ article {
     }
 
     a {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
         text-decoration: none;
     }
 

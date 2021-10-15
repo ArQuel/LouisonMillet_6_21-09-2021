@@ -105,3 +105,9 @@
   .select-items div:hover, .same-as-selected {
     background-color: $secondary-color
   }
+
+  @media screen and (max-width: 900px) {
+      .select-container {
+        display: none;
+      }
+  }

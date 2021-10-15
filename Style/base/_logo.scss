@@ -7,3 +7,17 @@ header img {
 header a{
         width: 300px;
 }
+
+@media (max-width: 900px) {
+        header {
+                display: flex;
+                justify-content: center;
+                width: 100%;
+        }
+
+        header img {
+                margin-left: 0;
+        }
+
+
+}

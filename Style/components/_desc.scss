@@ -25,12 +25,12 @@
         margin-top: 5px;
     }
 
-    p:nth-child(2){
+    h2{
         color: $primary-color;
         font-size: 30px;
     }
 
-    p:nth-child(3){
+    h3{
         margin-top: 15px;
         font-size: 22px;
     }
@@ -88,6 +88,91 @@
         display: flex;
         justify-content: flex-end;
         padding-right: 100px;
+    }
+}
+
+
+@media screen and (max-width: 1050px) {
+    .photograph-header {
+        width: 100%;
+        margin-right: 0;
+        margin-left: 0;
+    }
+  } 
+
+
+@media screen and (max-width: 900px) {
+    .photograph-header {
+        margin-top: 30px;
+        margin-bottom: 30px;
+        background-color: white;
+        width: 100%;
+        margin-right: 0;
+        margin-left: 0;
+        padding-left: 0;
+        padding-right: 0;
+        height: 200px;
+
+        h1 {
+            font-size: 36px
+        }
+    }
+
+    .photograph-header div:nth-child(1) {
+        flex: 0;
+        padding-left: 10px;
+    }
+
+    .photograph-header img{
+        width: 130px;
+        height: 130px;
+    }
+
+
+    .photograph-header #buttonOpen {
+        position: fixed;
+        bottom: 2%;
+        z-index: 99;
+        height: 50px;
+        width: 250px;
+        left: calc(100% - 74%)
+    }
+    .photograph-header .tagsList{
+        width: 300px
+    }
+
+    .photograph-header h2 {
+        font-size: 13px;
+        padding-left: 5px;
+        padding-top: 10px;
+    }
+
+    .photograph-header h3{
+        font-size: 13px;
+        padding-left: 5px;
+    }
+
+    .photograph-header .tags {
+        width: 60px;
+        font-size: 11px;
+        padding-left: 5px;
+    }
+
+    .photograph-header div:nth-child(3){
+        position: absolute;
+        right: 0;
+        padding: 0;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .photograph-header #buttonOpen {
+        position: fixed;
+        bottom: 2%;
+        z-index: 99;
+        height: 50px;
+        width: 250px;
+        left: calc(100% - 74%)    
     }
 }
 

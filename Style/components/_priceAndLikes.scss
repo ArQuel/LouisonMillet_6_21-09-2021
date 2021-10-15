@@ -20,3 +20,9 @@
         font-size: 25px;
     }
 }
+
+@media screen and (max-width: 872px) {
+    #likes_and_price {
+        display: none;
+    }
+}

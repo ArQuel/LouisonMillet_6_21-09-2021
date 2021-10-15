@@ -105,3 +105,49 @@ form {
 
 }
 
+@media screen and (max-width: 900px) {
+    .fondForm{
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        
+        button {
+            align-self: center;
+        }
+        
+        #crossForm {
+            right: 15%
+        }
+    }
+
+    form {
+        width: 100%;
+        height: 100%;
+
+        h1 {
+            font-size: 36px;
+            font-weight: bold;
+        }
+
+        div h2 {
+            font-weight: bold;
+            font-size: 36px;
+        }
+
+        div label {
+            font-size: 22px;
+        }
+
+        div input {
+            width: 415px;
+        }
+
+        textarea {
+            width: 415px;
+        }
+
+
+    }
+}
+

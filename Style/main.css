@@ -17,6 +17,17 @@ header a {
   width: 300px;
 }
 
+@media (max-width: 900px) {
+  header {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+  header img {
+    margin-left: 0;
+  }
+}
+
 header {
   display: flex;
   width: 70%;
@@ -28,6 +39,22 @@ nav {
   display: flex;
   align-items: center;
   max-width: 740px;
+  font-weight: bold;
+}
+
+@media screen and (max-width: 900px) {
+  nav {
+    width: 100%;
+    position: absolute;
+    margin-left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    top: 98px;
+    left: 0px;
+    flex-wrap: wrap;
+  }
 }
 
 body {
@@ -36,9 +63,15 @@ body {
 
 #title {
   position: absolute;
-  right: 5em;
   top: 0.7em;
+  right: 5%;
   color: #901C1C;
+}
+
+@media screen and (max-width: 900px) {
+  #title {
+    right: 1%;
+  }
 }
 
 .tags {
@@ -170,6 +203,42 @@ form div button:hover {
   align-self: center;
 }
 
+@media screen and (max-width: 900px) {
+  .fondForm {
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+  }
+  .fondForm button {
+    align-self: center;
+  }
+  .fondForm #crossForm {
+    right: 15%;
+  }
+  form {
+    width: 100%;
+    height: 100%;
+  }
+  form h1 {
+    font-size: 36px;
+    font-weight: bold;
+  }
+  form div h2 {
+    font-weight: bold;
+    font-size: 36px;
+  }
+  form div label {
+    font-size: 22px;
+  }
+  form div input {
+    width: 415px;
+  }
+  form textarea {
+    width: 415px;
+  }
+}
+
 #likes_and_price {
   position: fixed;
   width: 376px;
@@ -191,6 +260,12 @@ form div button:hover {
 #likes_and_price p {
   font-weight: bold;
   font-size: 25px;
+}
+
+@media screen and (max-width: 872px) {
+  #likes_and_price {
+    display: none;
+  }
 }
 
 .select-container {
@@ -278,6 +353,12 @@ form div button:hover {
   background-color: #D3573C;
 }
 
+@media screen and (max-width: 900px) {
+  .select-container {
+    display: none;
+  }
+}
+
 .bground {
   width: 100%;
   height: 100%;
@@ -361,6 +442,25 @@ form div button:hover {
   font-size: 28px;
 }
 
+@media screen and (max-width: 900px) {
+  .slider .prev-slide:after {
+    padding: 0;
+    font-size: 2rem;
+  }
+  .slider .next-slide:after {
+    padding: 0;
+    font-size: 2rem;
+  }
+  .slider #cross {
+    top: 18%;
+    right: 12%;
+    font-size: 25px;
+  }
+  .slider p {
+    font-size: 15px;
+  }
+}
+
 .medias {
   display: flex;
   flex-wrap: wrap;
@@ -377,7 +477,7 @@ form div button:hover {
   margin-bottom: 100px;
 }
 
-.medias .card_media p {
+.medias .card_media h4 {
   color: #901C1C;
   font-weight: bold;
   font-size: 20px;
@@ -442,12 +542,12 @@ form div button:hover {
   margin-top: 5px;
 }
 
-.photograph-header p:nth-child(2) {
+.photograph-header h2 {
   color: #901C1C;
   font-size: 30px;
 }
 
-.photograph-header p:nth-child(3) {
+.photograph-header h3 {
   margin-top: 15px;
   font-size: 22px;
 }
@@ -507,6 +607,80 @@ form div button:hover {
   padding-right: 100px;
 }
 
+@media screen and (max-width: 1050px) {
+  .photograph-header {
+    width: 100%;
+    margin-right: 0;
+    margin-left: 0;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .photograph-header {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    background-color: white;
+    width: 100%;
+    margin-right: 0;
+    margin-left: 0;
+    padding-left: 0;
+    padding-right: 0;
+    height: 200px;
+  }
+  .photograph-header h1 {
+    font-size: 36px;
+  }
+  .photograph-header div:nth-child(1) {
+    flex: 0;
+    padding-left: 10px;
+  }
+  .photograph-header img {
+    width: 130px;
+    height: 130px;
+  }
+  .photograph-header #buttonOpen {
+    position: fixed;
+    bottom: 2%;
+    z-index: 99;
+    height: 50px;
+    width: 250px;
+    left: calc(100% - 74%);
+  }
+  .photograph-header .tagsList {
+    width: 300px;
+  }
+  .photograph-header h2 {
+    font-size: 13px;
+    padding-left: 5px;
+    padding-top: 10px;
+  }
+  .photograph-header h3 {
+    font-size: 13px;
+    padding-left: 5px;
+  }
+  .photograph-header .tags {
+    width: 60px;
+    font-size: 11px;
+    padding-left: 5px;
+  }
+  .photograph-header div:nth-child(3) {
+    position: absolute;
+    right: 0;
+    padding: 0;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .photograph-header #buttonOpen {
+    position: fixed;
+    bottom: 2%;
+    z-index: 99;
+    height: 50px;
+    width: 250px;
+    left: calc(100% - 74%);
+  }
+}
+
 .cards {
   display: flex;
   justify-content: space-around;
@@ -550,6 +724,9 @@ article img {
 }
 
 article a {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
   text-decoration: none;
 }
 

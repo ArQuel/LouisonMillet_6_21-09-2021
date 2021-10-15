@@ -33,12 +33,12 @@ function displayDesc (actualPhotographer, medias) {
   <h1>
       ${actualPhotographer.name}
   </h1>
-  <p>
+  <h2>
       ${actualPhotographer.city}, ${actualPhotographer.country}
-  </p>
-  <p>
+  </h2>
+  <h3>
       ${actualPhotographer.tagline}
-  </p>
+  </h3>
   <div class="tagsList">
       
   </div>
@@ -49,7 +49,7 @@ function displayDesc (actualPhotographer, medias) {
   </button>
 </div>
 <div>
-  <img src="${actualPhotographer.portrait}">
+  <img src="${actualPhotographer.portrait}" alt="${actualPhotographer.name}">
 </div>`
   displayCardsTags(actualPhotographer)
   const photographerMedias = medias.filter(elt => elt.photographerId === actualPhotographer.id)
@@ -71,8 +71,8 @@ function factoryMedia (actualPhotographer, media, container) {
   const mediasElt = container
   if ('image' in media) {
     mediasElt.innerHTML += `<div class="card_media">
-  <img src="img/${actualPhotographer.name}/${media.image}" id=${media.id}></img>
-  <p>${media.title}</p>
+  <img src="img/${actualPhotographer.name}/${media.image}" id=${media.id} alt='${media.title} picture'></img>
+  <h4>${media.title}</h4>
   <div>
   <span>
   ${media.likes}
@@ -82,8 +82,8 @@ function factoryMedia (actualPhotographer, media, container) {
   </div>`
   } else if ('video' in media) {
     mediasElt.innerHTML += `<div class="card_media">
-    <video src="img/${actualPhotographer.name}/${media.video}" id=${media.id}></video>
-    <p>${media.title}</p>
+    <video src="img/${actualPhotographer.name}/${media.video}" id=${media.id} alt='${media.title} video'></video>
+    <h4>${media.title}</h4>
     <div>
     <span>
     ${media.likes}
@@ -168,19 +168,19 @@ function displayForm (photographer) {
       <div>
           <h1>Contactez-moi</h1>
           <h2>${photographer.name}</h2>
-          <label for="firstname">Prénom</label>
-          <input type="text" id="user_firstname" name="user_firstname">
+          <label for="user_firstname">Prénom</label>
+          <input type="text" id="user_firstname" name="user_firstname" for="firstname">
       </div>
       <div>
-          <label for="lastname">Nom</label>
+          <label for="user_lastname">Nom</label>
           <input type="text" id="user_lastname" name="user_lastname">
       </div>
      <div>
-          <label for="email">E-mail</label>
+          <label for="mail">E-mail</label>
           <input type="email" id="mail" name="user_mail">
       </div>
       <div>
-          <label for="msg">Votre message</label>
+          <label for="user_mail">Votre message</label>
           <textarea id="user_mail" name="user_message"></textarea>
       </div>
       <div id="crossForm">X</div>
@@ -310,6 +310,8 @@ function addSlider (mediaIMG, mediaVID, medias, photographer) {
       if (index.id === parseInt(img.id)) {
         const position = tableauMedias.indexOf(index)
         addEventOnLayout(position, tableauMedias, photographer, slider)
+        const buttonOpen = document.querySelector('#buttonOpen')
+        buttonOpen.style.display = 'none'
       }
     })
   }))
@@ -319,6 +321,8 @@ function addSlider (mediaIMG, mediaVID, medias, photographer) {
       if (index.id === parseInt(video.id)) {
         const position = tableauMedias.indexOf(index)
         addEventOnLayout(position, tableauMedias, photographer, slider)
+        const buttonOpen = document.querySelector('#buttonOpen')
+        buttonOpen.style.display = 'none'
       }
     })
   }))
@@ -341,8 +345,10 @@ function addEventOnLayout (position, tableauMedias, photographer, slider) {
 
 function addEventToClose (slider) {
   const cross = document.querySelector('#cross')
+  const buttonOpen = document.querySelector('#buttonOpen')
   cross.addEventListener('click', (e) => {
     slider.style.display = 'none'
+    buttonOpen.style.display = 'block'
   })
 }
 
@@ -426,7 +432,7 @@ function displayIMG (img, tableauIMG) {
   slider.innerHTML = ''
   slider.style.display = 'flex'
   slider.innerHTML += `<div class='nav-btn prev-slide' id='prevSlide'></div>
-        <div class='display'><img src="${img.src}"></img></div>
+        <div class='display'><img src="${img.src}" alt='${image.title} picture'></img></div>
         <p>${image.title}</p>
         <div id="cross">X</div>
         <div class='nav-btn next-slide' id='nextSlide'></div>`
@@ -441,7 +447,7 @@ function displayVID (vid, tableauVID) {
   slider.innerHTML = ''
   slider.style.display = 'flex'
   slider.innerHTML += `<div class='nav-btn prev-slide' id='prevSlide'></div>
-        <div class='display'><video controls src="${vid.src}"></video></div>
+        <div class='display'><video controls src="${vid.src}" alt='${video.title} video'></video></div>
         <p>${video.title}</p>
         <div id="cross">X</div>
         <div class='nav-btn next-slide' id='nextSlide'></div>`
