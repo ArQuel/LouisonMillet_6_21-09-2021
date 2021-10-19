@@ -105,6 +105,7 @@ body {
   left: 31%;
   top: 2%;
   height: 100%;
+  display: none;
 }
 
 .fondForm #crossForm {
@@ -632,7 +633,7 @@ form div button:hover {
   }
   .photograph-header div:nth-child(1) {
     flex: 0;
-    padding-left: 10px;
+    padding-left: 30px;
   }
   .photograph-header img {
     width: 130px;
@@ -647,7 +648,7 @@ form div button:hover {
     left: calc(100% - 74%);
   }
   .photograph-header .tagsList {
-    width: 300px;
+    width: 390px;
   }
   .photograph-header h2 {
     font-size: 13px;
@@ -659,13 +660,24 @@ form div button:hover {
     padding-left: 5px;
   }
   .photograph-header .tags {
-    width: 60px;
-    font-size: 11px;
-    padding-left: 5px;
+    cursor: pointer;
+    color: #901C1C;
+    font-size: 14px;
+    margin-right: 5px;
+    margin-left: 10px;
+    margin-bottom: 5px;
+    border: 0.5px solid #C4C4C4;
+    box-sizing: border-box;
+    border-radius: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
   }
   .photograph-header div:nth-child(3) {
     position: absolute;
-    right: 0;
+    right: 50px;
+    top: 50px;
     padding: 0;
   }
 }
