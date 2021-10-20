@@ -40,16 +40,15 @@ function displayDesc (actualPhotographer, medias) {
       ${actualPhotographer.tagline}
   </h3>
   <div class="tagsList">
-      
   </div>
 </div>
 <div>
-  <button id="buttonOpen">
+  <button id="buttonOpen" aria-label="Ouvrir le formulaire">
       Contactez-moi
   </button>
 </div>
 <div>
-  <img src="${actualPhotographer.portrait}" alt="${actualPhotographer.name}">
+  <img src="${actualPhotographer.portrait}" alt="Photo de ${actualPhotographer.name}">
 </div>`
   displayCardsTags(actualPhotographer)
   const photographerMedias = medias.filter(elt => elt.photographerId === actualPhotographer.id)
@@ -71,24 +70,24 @@ function factoryMedia (actualPhotographer, media, container) {
   const mediasElt = container
   if ('image' in media) {
     mediasElt.innerHTML += `<div class="card_media">
-  <img src="img/${actualPhotographer.name}/${media.image}" id=${media.id} alt='${media.title} picture'></img>
+  <img src="img/${actualPhotographer.name}/${media.image}" id=${media.id} alt='${media.title} picture' tabindex="0"></img>
   <h4>${media.title}</h4>
   <div>
   <span>
   ${media.likes}
   </span>
-  <i class="fas fa-heart"></i>
+  <i class="fas fa-heart" tabindex="0" aria-label="likes"></i>
   </div>
   </div>`
   } else if ('video' in media) {
     mediasElt.innerHTML += `<div class="card_media">
-    <video src="img/${actualPhotographer.name}/${media.video}" id=${media.id} alt='${media.title} video'></video>
+    <video src="img/${actualPhotographer.name}/${media.video}" id=${media.id} alt='${media.title} video' tabindex="0"></video>
     <h4>${media.title}</h4>
     <div>
     <span>
     ${media.likes}
     </span>
-    <i class="fas fa-heart"></i>
+    <i class="fas fa-heart" tabindex="0" aria-label="likes"></i>
     </div>
     </div>`
   }
@@ -99,7 +98,7 @@ function displayCardsTags (photographer) {
   const divElt = photographHeader.querySelector('.tagsList')
   for (let j = 0; j < photographer.tags.length; j++) {
     divElt.innerHTML += `    
-        <span class="tags" data-tag="${photographer.tags[j]}">
+        <span class="tags" tabindex="0" data-tag="${photographer.tags[j]}">
             #${photographer.tags[j].charAt(0).toUpperCase() + photographer.tags[j].slice(1)}
         </span>`
   }
@@ -147,7 +146,7 @@ function displayPriceAndLikes (likes, photographer) {
     totalLikes = parseInt(like.innerText) + parseInt(totalLikes)
   })
   totalLikesElt.innerHTML += `<div><span>${totalLikes}</span>
-  <i class="fas fa-heart"></i></div>
+  <i class="fas fa-heart" tabindex="0" aria-label="likes"></i></div>
   <p>${photographer.price}€ /jour</p>`
 }
 
@@ -161,8 +160,8 @@ function displayForm (photographer) {
     contentbg.style.display = 'block'
     main.style.opacity = '0.5'
     likesAndPrices.style.filter = 'blur(5px)'
-    main.style.filter = 'blur(5px)'
     fondForm.style.display = 'block'
+    main.classList.add('blurred')
     fondForm.innerHTML = `
      <form id="validation">
       <div>
@@ -183,10 +182,10 @@ function displayForm (photographer) {
           <label for="user_mail">Votre message</label>
           <textarea id="user_mail" name="user_message"></textarea>
       </div>
-      <div id="crossForm">X</div>
+      <div id="crossForm" tabindex="0" aria-label="fermer le formulaire">X</div>
 
       <div class="buttonSubmit">
-          <button type="submit" id="#buttonSend">Envoyer</button>
+          <button type="submit" id="#buttonSend" aria-label="Envoyer le formulaire">Envoyer</button>
       </div>
     </form>
     `
@@ -195,7 +194,7 @@ function displayForm (photographer) {
       fondForm.style.display = 'none'
       main.style.opacity = '1'
       likesAndPrices.style.filter = 'blur(0px)'
-      main.style.filter = 'blur(0px)'
+      main.classList.remove('blurred')
       contentbg.style.display = 'none'
       // displayForm(photographer)
     })
@@ -361,11 +360,11 @@ function prevSlide (tableauMedias, position, photographer) {
       slider.innerHTML = ''
       const lienPhoto = 'img/' + photographer.name + '/' + tableauMedias[position].image
       slider.style.display = 'flex'
-      slider.innerHTML += `<div class='nav-btn prev-slide' id='prevSlide'></div>
-          <div class='display'><img src="${lienPhoto}"></div>
+      slider.innerHTML += `<div class='nav-btn prev-slide' tabindex="0" aria-label="diapo précédente" id='prevSlide'></div>
+          <div class='display'><img src="${lienPhoto}" tabindex="0"></div>
           <p>${tableauMedias[position].title}</p>
-          <div id="cross">X</div>
-          <div class='nav-btn next-slide' id='nextSlide'></div>`
+          <div id="cross" tabindex="0" aria-label="fermer la diapo">X</div>
+          <div class='nav-btn next-slide' tabindex="0" aria-label="diapo suivante" id='nextSlide'></div>`
       addEventToClose(slider)
       addEventOnLayout(position, tableauMedias, photographer, slider)
     }
@@ -375,11 +374,11 @@ function prevSlide (tableauMedias, position, photographer) {
       slider.innerHTML = ''
       const lienVID = 'img/' + photographer.name + '/' + tableauMedias[position].video
       slider.style.display = 'flex'
-      slider.innerHTML += `<div class='nav-btn prev-slide' id='prevSlide'></div>
-      <div class='display'><video controls src="${lienVID}"></video></div>
+      slider.innerHTML += `<div class='nav-btn prev-slide' tabindex="0" aria-label="diapo précédente" id='prevSlide'></div>
+      <div class='display'><video controls tabindex="0" src="${lienVID}"></video></div>
       <p>${tableauMedias[position].title}</p>
-      <div id="cross">X</div>
-      <div class='nav-btn next-slide' id='nextSlide'></div>`
+      <div id="cross" tabindex="0" aria-label="fermer la diapo">X</div>
+      <div class='nav-btn next-slide' tabindex="0" aria-label="diapo suivante" id='nextSlide'></div>`
       addEventToClose(slider)
       addEventOnLayout(position, tableauMedias, photographer, slider)
     }
@@ -397,11 +396,11 @@ function nextSlide (tableauMedias, position, photographer) {
       slider.innerHTML = ''
       const lienPhoto = 'img/' + photographer.name + '/' + tableauMedias[position].image
       slider.style.display = 'flex'
-      slider.innerHTML += `<div class='nav-btn prev-slide' id='prevSlide'></div>
+      slider.innerHTML += `<div class='nav-btn prev-slide' tabindex="0" aria-label="diapo précédente" id='prevSlide'></div>
           <div class='display'><img src="${lienPhoto}"></div>
           <p>${tableauMedias[position].title}</p>
-          <div id="cross">X</div>
-          <div class='nav-btn next-slide' id='nextSlide'></div>`
+          <div id="cross" tabindex="0" aria-label="fermer la diapo">X</div>
+          <div class='nav-btn next-slide' tabindex="0" aria-label="diapo suivante" id='nextSlide'></div>`
       addEventOnLayout(position, tableauMedias, photographer, slider)
     }
     if ('video' in tableauMedias[position]) {
@@ -410,11 +409,11 @@ function nextSlide (tableauMedias, position, photographer) {
       slider.innerHTML = ''
       const lienVID = 'img/' + photographer.name + '/' + tableauMedias[position].video
       slider.style.display = 'flex'
-      slider.innerHTML += `<div class='nav-btn prev-slide' id='prevSlide'></div>
+      slider.innerHTML += `<div class='nav-btn prev-slide' tabindex="0" aria-label="diapo précédente" id='prevSlide'></div>
       <div class='display'><video controls src="${lienVID}"></video></div>
       <p>${tableauMedias[position].title}</p>
-      <div id="cross">X</div>
-      <div class='nav-btn next-slide' id='nextSlide'></div>`
+      <div id="cross" tabindex="0" aria-label="fermer la diapo">X</div>
+      <div class='nav-btn next-slide' id='nextSlide' aria-label="diapo suivante" tabindex="0"></div>`
 
       addEventOnLayout(position, tableauMedias, photographer, slider)
     }
@@ -432,11 +431,11 @@ function displayIMG (img, tableauIMG) {
   const slider = document.querySelector('.slider')
   slider.innerHTML = ''
   slider.style.display = 'flex'
-  slider.innerHTML += `<div class='nav-btn prev-slide' id='prevSlide'></div>
-        <div class='display'><img src="${img.src}" alt='${image.title} picture'></img></div>
+  slider.innerHTML += `<div class='nav-btn prev-slide' tabindex="0" id='prevSlide'></div>
+        <div class='display'><img src="${img.src}" alt='${image.title} picture' tabindex="0"></img></div>
         <p>${image.title}</p>
-        <div id="cross">X</div>
-        <div class='nav-btn next-slide' id='nextSlide'></div>`
+        <div id="cross" tabindex="0">X</div>
+        <div class='nav-btn next-slide' tabindex="0" id='nextSlide'></div>`
   addEventToClose(slider)
 }
 
@@ -447,11 +446,11 @@ function displayVID (vid, tableauVID) {
   const slider = document.querySelector('.slider')
   slider.innerHTML = ''
   slider.style.display = 'flex'
-  slider.innerHTML += `<div class='nav-btn prev-slide' id='prevSlide'></div>
-        <div class='display'><video controls src="${vid.src}" alt='${video.title} video'></video></div>
+  slider.innerHTML += `<div class='nav-btn prev-slide' id='prevSlide' tabindex="0"></div>
+        <div class='display'><video controls src="${vid.src}" alt='${video.title} video' tabindex="0"></video></div>
         <p>${video.title}</p>
-        <div id="cross">X</div>
-        <div class='nav-btn next-slide' id='nextSlide'></div>`
+        <div id="cross" tabindex="0">X</div>
+        <div class='nav-btn next-slide' tabindex="0" id='nextSlide'></div>`
   addEventToClose(slider)
 }
 

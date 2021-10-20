@@ -64,3 +64,19 @@ article {
     }
 }
 
+@media screen and (max-width: 900px) {
+    .cards{
+        flex-direction: column;
+        align-content: center;
+        margin-top: 150px;
+    }
+
+    article {
+        img {
+            margin-top: 0;
+        }
+        .tagsList {
+            flex-wrap: nowrap;
+        }
+    }
+}

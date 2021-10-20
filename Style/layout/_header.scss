@@ -3,3 +3,13 @@ header{
     width: 70%;
 }
 
+.centered {
+    width: 100%;
+}
+
+@media screen and (max-width: 900px) {
+    .smaller {
+        width: 60%;
+        margin-top: 20px;
+    }
+}

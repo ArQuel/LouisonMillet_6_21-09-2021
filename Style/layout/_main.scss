@@ -9,10 +9,6 @@ body {
     color: $primary-color;
 }
 
-
-@media screen and (max-width: 900px) {
-
-    #title {
-        right: 1%;
-    }
+.blurred {
+    filter: blur(5px)
 }

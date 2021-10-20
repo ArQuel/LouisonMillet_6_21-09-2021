@@ -32,7 +32,7 @@ function getTagsFrom (photographers) {
 function displaytags (tags) {
   const navElt = document.querySelector('nav')
   for (let i = 0; i < tags.length; i++) {
-    navElt.innerHTML += `<span class="tags" data-tag="${tags[i]}">#${tags[i].charAt(0).toUpperCase() + tags[i].slice(1)}</span>`
+    navElt.innerHTML += `<span class="tags" tabindex="0" data-tag="${tags[i]}">#${tags[i].charAt(0).toUpperCase() + tags[i].slice(1)}</span>`
   }
 }
 
@@ -67,7 +67,7 @@ function displayCardsTags (photographers, index) {
   const divElt = photographersElts[photographersElts.length - 1].querySelector('.tagsList')
   for (let j = 0; j < photographers[index].tags.length; j++) {
     divElt.innerHTML += `    
-      <span class="tags" data-tag="${photographers[index].tags[j]}">
+      <span class="tags" tabindex="0" data-tag="${photographers[index].tags[j]}">
           #${photographers[index].tags[j].charAt(0).toUpperCase() + photographers[index].tags[j].slice(1)}
       </span>`
   }

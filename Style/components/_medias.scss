@@ -53,3 +53,8 @@
     
 }
 
+@media screen and (max-width: 900px) {
+    .medias img, .medias video {
+        height: 190px;
+    }
+}
