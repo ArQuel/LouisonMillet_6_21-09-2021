@@ -674,7 +674,7 @@ form div button:hover {
     padding-left: 10px;
     padding-right: 10px;
   }
-  .photograph-header div:nth-child(3) {
+  .photograph-header img {
     position: absolute;
     right: 50px;
     top: 50px;

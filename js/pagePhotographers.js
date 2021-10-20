@@ -196,7 +196,8 @@ function displayForm (photographer) {
       main.style.opacity = '1'
       likesAndPrices.style.filter = 'blur(0px)'
       main.style.filter = 'blur(0px)'
-      displayForm(photographer)
+      contentbg.style.display = 'none'
+      // displayForm(photographer)
     })
     const verifFirst = false
     const verifLast = false
