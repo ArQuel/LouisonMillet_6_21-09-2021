@@ -127,6 +127,7 @@ function displayMediasSortedBy (sort, medias, container, photographer) {
       container.innerHTML = ''
       medias.forEach(media => {
         factoryMedia(photographer, media, container)
+        likesCount(media)
       })
       break
 
@@ -135,6 +136,7 @@ function displayMediasSortedBy (sort, medias, container, photographer) {
       container.innerHTML = ''
       medias.forEach(media => {
         factoryMedia(photographer, media, container)
+        likesCount(media)
       })
       break
 
@@ -143,6 +145,7 @@ function displayMediasSortedBy (sort, medias, container, photographer) {
       container.innerHTML = ''
       medias.forEach(media => {
         factoryMedia(photographer, media, container)
+        likesCount(media)
       })
       break
   }
