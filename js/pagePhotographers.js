@@ -238,7 +238,6 @@ function reinitInputs () {
 
 function validateMessage () {
   const formulaire = document.querySelector('form')
-  console.log(formulaire)
   formulaire.style.display = 'none'
 
   const valide = document.createElement('p')
@@ -273,11 +272,12 @@ function validate (event, verifFirst, verifLast, verifEmail) {
   event.preventDefault()
   const firstName = document.querySelector('#user_firstname')
   const lastName = document.querySelector('#user_lastname')
-  const email = document.querySelector('#user_mail')
+  const email = document.querySelector('#mail')
   verifFirst = checkTextInput(firstName)
   verifLast = checkTextInput(lastName)
   verifEmail = checkEmailInput(email)
   if (verifFirst && verifLast && verifEmail) {
+    console.log(firstName.value, lastName.value, email.value)
     reinitInputs()
     validateMessage()
   } else {
