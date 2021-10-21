@@ -530,14 +530,21 @@ const l = x.length
 for (i = 0; i < l; i++) {
   selElmnt = x[i].getElementsByTagName('select')[0]
   ll = selElmnt.length
-  /* Pour chaque élément créer une nouvelle div qui agira comme un élément select */
+  /* Pour chaque élément créer une nouvelle div qui agira comme un élément select et lui ajouter les attributs d'accessibilité */
   a = document.createElement('DIV')
   a.setAttribute('class', 'select-selected')
+  a.setAttribute('role', 'button')
+  a.setAttribute('aria-haspopup', 'listbox')
+  a.setAttribute('aria-expanded', 'false')
+
   a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML
   x[i].appendChild(a)
   /* Pour chaque élément créer une nouvelle div qui contiendra la liste des options */
   b = document.createElement('DIV')
   b.setAttribute('class', 'select-items select-hide')
+  a.addEventListener('click', (e) => {
+    a.setAttribute('aria-expanded', 'true')
+  })
   for (j = 1; j < ll; j++) {
     /* Pour chaque option dans l'élément select original, crée une nouvelle div qui agira comme une option */
     c = document.createElement('DIV')
