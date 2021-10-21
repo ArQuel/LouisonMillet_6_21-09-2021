@@ -215,7 +215,7 @@
     }
 }
 
-@media screen and (max-width: 400px){
+@media screen and (max-width: 400px) {
     .photograph-header img{
         right: -30px;
     }
@@ -223,9 +223,6 @@
     .medias {
         padding-left: 15%;
     }
-}
-
-@media screen and (max-width: 400px) {
     .photograph-header #buttonOpen {
         position: fixed;
         bottom: 2%;

@@ -759,9 +759,6 @@ form div button:hover {
   .medias {
     padding-left: 15%;
   }
-}
-
-@media screen and (max-width: 400px) {
   .photograph-header #buttonOpen {
     position: fixed;
     bottom: 2%;
