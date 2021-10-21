@@ -93,14 +93,13 @@ function factoryMedia (actualPhotographer, media, container) {
   }
 }
 
-// function likesCount (media) {
-//   const likes = document.querySelector('#clickforlikes')
-//   likes.addEventListener('click', (e) => {
-//     console.log(media.likes)
-//     media.likes = media.likes + 1
-//     console.log(media.likes)
-//   })
-// }
+function likesCount (media) {
+  const likes = document.querySelector('#clickforlikes')
+  likes.addEventListener('click', (e) => {
+    media.likes = media.likes + 1
+    console.log(media.likes)
+  })
+}
 
 function displayCardsTags (photographer) {
   const photographHeader = document.getElementsByClassName('photograph-header')[0]
@@ -120,6 +119,7 @@ function displayMediasSortedBy (sort, medias, container, photographer) {
       container.innerHTML = ''
       medias.forEach(media => {
         factoryMedia(photographer, media, container)
+        likesCount(media)
       })
       break
     case 'Titre':
@@ -379,7 +379,7 @@ function addEventToClose (slider) {
     slider.style.display = 'none'
     buttonOpen.style.display = 'block'
   })
-  cross.addEventListener('keyup', (e) => {
+  slider.addEventListener('keyup', (e) => {
     if (e.key === 'Escape') {
       slider.style.display = 'none'
       buttonOpen.style.display = 'block'
