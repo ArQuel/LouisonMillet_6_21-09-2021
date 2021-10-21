@@ -73,9 +73,7 @@ function factoryMedia (actualPhotographer, media, container) {
   <img src="img/${actualPhotographer.name}/${media.image}" id=${media.id} alt='${media.title} picture' tabindex="0"></img>
   <h4>${media.title}</h4>
   <div id='clickforlikes'>
-  <span>
-  ${media.likes}
-  </span>
+  <span>${media.likes}</span>
   <i class="fas fa-heart" tabindex="0" aria-label="likes"></i>
   </div>
   </div>`
@@ -84,9 +82,7 @@ function factoryMedia (actualPhotographer, media, container) {
     <video src="img/${actualPhotographer.name}/${media.video}" id=${media.id} alt='${media.title} video' tabindex="0"></video>
     <h4>${media.title}</h4>
     <div id='clickforlikes'>
-    <span>
-    ${media.likes}
-    </span>
+    <span>${media.likes}</span>
     <i class="fas fa-heart" tabindex="0" aria-label="likes"></i>
     </div>
     </div>`
@@ -94,10 +90,25 @@ function factoryMedia (actualPhotographer, media, container) {
 }
 
 function likesCount (media) {
-  const likes = document.querySelector('#clickforlikes')
-  likes.addEventListener('click', (e) => {
-    media.likes = media.likes + 1
-    console.log(media.likes)
+  const likes = document.querySelectorAll('#clickforlikes')
+  likes.forEach(elt => {
+    elt.addEventListener('click', (e) => {
+      const test = elt.querySelector('span')
+      let mediaLikes = parseInt(test.textContent)
+      const newMediaLikesUp = parseInt(test.textContent)
+      console.log('mediaLikes = ' + mediaLikes, 'mediaLikesUp = ' + newMediaLikesUp)
+      if (mediaLikes !== newMediaLikesUp) {
+        const decrementLikes = mediaLikes - 1
+        test.textContent = decrementLikes
+        mediaLikes = decrementLikes
+        console.log('decrementLikes = ' + decrementLikes)
+      } else {
+        const incrementLikes = mediaLikes + 1
+        test.textContent = incrementLikes
+        mediaLikes = incrementLikes
+        console.log('incrementLikes = ' + incrementLikes)
+      }
+    })
   })
 }
 
