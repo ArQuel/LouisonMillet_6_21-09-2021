@@ -68,11 +68,12 @@ function displayDesc (actualPhotographer, medias) {
 
 function factoryMedia (actualPhotographer, media, container) {
   const mediasElt = container
+  console.log(media)
   if ('image' in media) {
     mediasElt.innerHTML += `<div class="card_media">
   <img src="img/${actualPhotographer.name}/${media.image}" id=${media.id} alt='${media.title} picture' tabindex="0"></img>
   <h4>${media.title}</h4>
-  <div>
+  <div id='clickforlikes'>
   <span>
   ${media.likes}
   </span>
@@ -83,7 +84,7 @@ function factoryMedia (actualPhotographer, media, container) {
     mediasElt.innerHTML += `<div class="card_media">
     <video src="img/${actualPhotographer.name}/${media.video}" id=${media.id} alt='${media.title} video' tabindex="0"></video>
     <h4>${media.title}</h4>
-    <div>
+    <div id='clickforlikes'>
     <span>
     ${media.likes}
     </span>
@@ -91,6 +92,9 @@ function factoryMedia (actualPhotographer, media, container) {
     </div>
     </div>`
   }
+  media.forEach(media => {
+    
+  })
 }
 
 function displayCardsTags (photographer) {
@@ -286,7 +290,6 @@ function validate (event, verifFirst, verifLast, verifEmail) {
 }
 
 // Display Slider
-
 function addSlider (mediaIMG, mediaVID, medias, photographer) {
   const slider = document.querySelector('.slider')
   const tableauIMG = []
@@ -335,11 +338,25 @@ function addEventOnLayout (position, tableauMedias, photographer, slider) {
     nextSlide(tableauMedias, position, photographer)
     addEventToClose(slider)
   })
+  next.addEventListener('keyup', (e) => {
+    if (e.key === 'Right') {
+      position = position + 1
+      nextSlide(tableauMedias, position, photographer)
+      addEventToClose(slider)
+    }
+  })
   const prev = document.querySelector('#prevSlide')
   prev.addEventListener('click', (e) => {
     position = position - 1
     prevSlide(tableauMedias, position, photographer)
     addEventToClose(slider)
+  })
+  prev.addEventListener('keyup', (e) => {
+    if (e.key === 'Left') {
+      position = position - 1
+      prevSlide(tableauMedias, position, photographer)
+      addEventToClose(slider)
+    }
   })
 }
 
@@ -350,12 +367,18 @@ function addEventToClose (slider) {
     slider.style.display = 'none'
     buttonOpen.style.display = 'block'
   })
+  cross.addEventListener('keyup', (e) => {
+    console.log('coucou')
+    if (e.key === 'Escape') {
+      slider.style.display = 'none'
+      buttonOpen.style.display = 'block'
+    }
+  })
 }
 
 function prevSlide (tableauMedias, position, photographer) {
   if (position >= 0) {
     if ('image' in tableauMedias[position]) {
-      console.log(position)
       const slider = document.querySelector('.slider')
       slider.innerHTML = ''
       const lienPhoto = 'img/' + photographer.name + '/' + tableauMedias[position].image
@@ -369,7 +392,6 @@ function prevSlide (tableauMedias, position, photographer) {
       addEventOnLayout(position, tableauMedias, photographer, slider)
     }
     if ('video' in tableauMedias[position]) {
-      console.log(position)
       const slider = document.querySelector('.slider')
       slider.innerHTML = ''
       const lienVID = 'img/' + photographer.name + '/' + tableauMedias[position].video
@@ -496,6 +518,7 @@ for (i = 0; i < l; i++) {
   for (j = 1; j < ll; j++) {
     /* Pour chaque option dans l'élément select original, crée une nouvelle div qui agira comme une option */
     c = document.createElement('DIV')
+    c.setAttribute('tabindex', 0)
     c.innerHTML = selElmnt.options[j].innerHTML
     c.addEventListener('click', function (e) {
       /* Quand un élément est cliqué, met à jour */

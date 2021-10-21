@@ -76,13 +76,20 @@ function displayCardsTags (photographers, index) {
 function addListenersToTags (tagsList, photographers) {
   tagsList.forEach(tag => {
     tag.addEventListener('click', (e) => {
-      const cardsElt = document.querySelector('.cards')
-      cardsElt.innerHTML = ''
-      const tag = e.target.dataset.tag
-      const filterPhotographers = photographers.filter(photographer => photographer.tags.includes(tag))
-      displayCards(filterPhotographers)
-      const pageTags = document.querySelectorAll('article span.tags')
-      addListenersToTags(pageTags, photographers)
+      gererData(e, photographers)
+    })
+    tag.addEventListener('keyup', (e) => {
+      if (e.key === 'Enter') gererData(e, photographers)
     })
   })
+}
+
+function gererData (e, photographers) {
+  const cardsElt = document.querySelector('.cards')
+  cardsElt.innerHTML = ''
+  const tag = e.target.dataset.tag
+  const filterPhotographers = photographers.filter(photographer => photographer.tags.includes(tag))
+  displayCards(filterPhotographers)
+  const pageTags = document.querySelectorAll('article span.tags')
+  addListenersToTags(pageTags, photographers)
 }
