@@ -68,7 +68,6 @@ function displayDesc (actualPhotographer, medias) {
 
 function factoryMedia (actualPhotographer, media, container) {
   const mediasElt = container
-  console.log(media)
   if ('image' in media) {
     mediasElt.innerHTML += `<div class="card_media">
   <img src="img/${actualPhotographer.name}/${media.image}" id=${media.id} alt='${media.title} picture' tabindex="0"></img>
@@ -92,15 +91,16 @@ function factoryMedia (actualPhotographer, media, container) {
     </div>
     </div>`
   }
-  // media.forEach(media => {
-  //   const likes = document.querySelector('#clickforlikes')
-  //   likes.addEventListener('click', (e) => {
-  //     console.log(media.likes)
-  //     media.likes = media.likes + 1
-  //     console.log(media.likes)
-  //   })
-  // })
 }
+
+// function likesCount (media) {
+//   const likes = document.querySelector('#clickforlikes')
+//   likes.addEventListener('click', (e) => {
+//     console.log(media.likes)
+//     media.likes = media.likes + 1
+//     console.log(media.likes)
+//   })
+// }
 
 function displayCardsTags (photographer) {
   const photographHeader = document.getElementsByClassName('photograph-header')[0]
@@ -205,7 +205,15 @@ function displayForm (photographer) {
       likesAndPrices.style.filter = 'blur(0px)'
       main.classList.remove('blurred')
       contentbg.style.display = 'none'
-      // displayForm(photographer)
+    })
+    cross.addEventListener('keyup', (e) => {
+      if (e.key === 'Escape') {
+        fondForm.style.display = 'none'
+        main.style.opacity = '1'
+        likesAndPrices.style.filter = 'blur(0px)'
+        main.classList.remove('blurred')
+        contentbg.style.display = 'none'
+      }
     })
     const verifFirst = false
     const verifLast = false
@@ -231,11 +239,10 @@ function checkEmailInput (input) {
   const regEmail = /^[\w\-\\+]+(\.[\w\\-]+)*@[\w\\-]+(\.[\w\\-]+)*\.[\w\\-]{2,4}$/
   const isOk = regEmail.test(input.value)
   if (!isOk || input.value === '') {
-    return true
-  } else {
     alert('Veuillez rentrer un mail correct')
+  } else {
+    return true
   }
-  return false
 }
 
 function reinitInputs () {
@@ -286,7 +293,7 @@ function validate (event, verifFirst, verifLast, verifEmail) {
   verifLast = checkTextInput(lastName)
   verifEmail = checkEmailInput(email)
   if (verifFirst && verifLast && verifEmail) {
-    console.log(firstName.value, lastName.value, email.value)
+    console.log('Prénom : ' + firstName.value, 'Nom : ' + lastName.value, 'email : ' + email.value)
     reinitInputs()
     validateMessage()
   } else {
@@ -344,7 +351,7 @@ function addEventOnLayout (position, tableauMedias, photographer, slider) {
     addEventToClose(slider)
   })
   next.addEventListener('keyup', (e) => {
-    if (e.key === 'Right') {
+    if (e.key === 'ArrowRight') {
       position = position + 1
       nextSlide(tableauMedias, position, photographer)
       addEventToClose(slider)
@@ -357,7 +364,7 @@ function addEventOnLayout (position, tableauMedias, photographer, slider) {
     addEventToClose(slider)
   })
   prev.addEventListener('keyup', (e) => {
-    if (e.key === 'Left') {
+    if (e.key === 'ArrowLeft') {
       position = position - 1
       prevSlide(tableauMedias, position, photographer)
       addEventToClose(slider)
@@ -373,7 +380,6 @@ function addEventToClose (slider) {
     buttonOpen.style.display = 'block'
   })
   cross.addEventListener('keyup', (e) => {
-    console.log('coucou')
     if (e.key === 'Escape') {
       slider.style.display = 'none'
       buttonOpen.style.display = 'block'
@@ -410,7 +416,6 @@ function prevSlide (tableauMedias, position, photographer) {
       addEventOnLayout(position, tableauMedias, photographer, slider)
     }
   } else {
-    console.log(position)
     position = tableauMedias.length - 1
     prevSlide(tableauMedias, position, photographer)
   }
@@ -431,7 +436,6 @@ function nextSlide (tableauMedias, position, photographer) {
       addEventOnLayout(position, tableauMedias, photographer, slider)
     }
     if ('video' in tableauMedias[position]) {
-      console.log(position)
       const slider = document.querySelector('.slider')
       slider.innerHTML = ''
       const lienVID = 'img/' + photographer.name + '/' + tableauMedias[position].video
@@ -445,7 +449,6 @@ function nextSlide (tableauMedias, position, photographer) {
       addEventOnLayout(position, tableauMedias, photographer, slider)
     }
   } else {
-    console.log(position)
     position = 0
     nextSlide(tableauMedias, position, photographer)
   }

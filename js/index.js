@@ -79,7 +79,9 @@ function addListenersToTags (tagsList, photographers) {
       gererData(e, photographers)
     })
     tag.addEventListener('keyup', (e) => {
-      if (e.key === 'Enter') gererData(e, photographers)
+      if (e.key === 'Enter') {
+        gererData(e, photographers)
+      }
     })
   })
 }
