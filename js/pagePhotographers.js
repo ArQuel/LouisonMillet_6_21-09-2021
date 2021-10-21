@@ -92,9 +92,14 @@ function factoryMedia (actualPhotographer, media, container) {
     </div>
     </div>`
   }
-  media.forEach(media => {
-    
-  })
+  // media.forEach(media => {
+  //   const likes = document.querySelector('#clickforlikes')
+  //   likes.addEventListener('click', (e) => {
+  //     console.log(media.likes)
+  //     media.likes = media.likes + 1
+  //     console.log(media.likes)
+  //   })
+  // })
 }
 
 function displayCardsTags (photographer) {
