@@ -7,6 +7,30 @@ nav{
     font-weight: bold;
 }
 
+@media screen and (max-width: 1690px) {
+    nav{
+        width: 100%;
+        position: absolute;
+        margin-left: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        top: 120px;
+        left: 25%;
+        flex-wrap: nowrap;
+    }
+
+    #title{
+        font-size: 22px;
+        margin-top: 20px;
+    }
+
+    .cards {
+        margin-top: 100px;
+    }
+}
+
 @media screen and (max-width: 900px) {
     nav{
         width: 100%;

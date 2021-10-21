@@ -53,6 +53,28 @@ nav {
   font-weight: bold;
 }
 
+@media screen and (max-width: 1690px) {
+  nav {
+    width: 100%;
+    position: absolute;
+    margin-left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    top: 120px;
+    left: 25%;
+    flex-wrap: nowrap;
+  }
+  #title {
+    font-size: 22px;
+    margin-top: 20px;
+  }
+  .cards {
+    margin-top: 100px;
+  }
+}
+
 @media screen and (max-width: 900px) {
   nav {
     width: 100%;
@@ -627,11 +649,35 @@ form div button:hover {
   padding-right: 100px;
 }
 
+@media screen and (max-width: 1700px) {
+  .photograph-header h1 {
+    font-size: 33px;
+  }
+  .tagsList {
+    width: 390px;
+  }
+}
+
 @media screen and (max-width: 1050px) {
   .photograph-header {
     width: 100%;
     margin-right: 0;
     margin-left: 0;
+  }
+  .photograph-header h1 {
+    font-size: 30px;
+  }
+  .photograph-header h2 {
+    font-size: 15px;
+  }
+  .photograph-header h3 {
+    font-size: 15px;
+  }
+  .photograph-header .tagsList {
+    width: 390px;
+  }
+  .photograph-header div:nth-child(1) {
+    width: 34%;
   }
 }
 
@@ -657,6 +703,7 @@ form div button:hover {
   .photograph-header div:nth-child(1) {
     flex: 0;
     padding-left: 30px;
+    width: 300px;
   }
   .photograph-header img {
     width: 130px;
@@ -702,6 +749,15 @@ form div button:hover {
     right: 30px;
     top: 50px;
     padding: 0;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .photograph-header img {
+    right: -30px;
+  }
+  .medias {
+    padding-left: 15%;
   }
 }
 
