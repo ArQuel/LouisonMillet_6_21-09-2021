@@ -62,8 +62,7 @@ function displayDesc (actualPhotographer, medias) {
     const mediaVID = document.querySelectorAll('video')
     addSlider(mediaIMG, mediaVID, photographerMedias, actualPhotographer)
   })
-  const likes = document.querySelectorAll('.medias .card_media span')
-  displayPriceAndLikes(likes, actualPhotographer)
+  displayPriceAndLikes(actualPhotographer)
 }
 
 function factoryMedia (actualPhotographer, media, container) {
@@ -89,25 +88,23 @@ function factoryMedia (actualPhotographer, media, container) {
   }
 }
 
-function likesCount (media) {
+function likesCount (photographer) {
   const likes = document.querySelectorAll('#clickforlikes')
+  let isIncrement = false
   likes.forEach(elt => {
     elt.addEventListener('click', (e) => {
-      const test = elt.querySelector('span')
-      let mediaLikes = parseInt(test.textContent)
-      const newMediaLikesUp = parseInt(test.textContent)
-      console.log('mediaLikes = ' + mediaLikes, 'mediaLikesUp = ' + newMediaLikesUp)
-      if (mediaLikes !== newMediaLikesUp) {
-        const decrementLikes = mediaLikes - 1
-        test.textContent = decrementLikes
-        mediaLikes = decrementLikes
-        console.log('decrementLikes = ' + decrementLikes)
-      } else {
+      const spanLikes = elt.querySelector('span')
+      const mediaLikes = parseInt(spanLikes.textContent)
+      if (isIncrement === false) {
         const incrementLikes = mediaLikes + 1
-        test.textContent = incrementLikes
-        mediaLikes = incrementLikes
-        console.log('incrementLikes = ' + incrementLikes)
+        spanLikes.textContent = incrementLikes
+        isIncrement = true
+      } else {
+        const decrementLikes = mediaLikes - 1
+        spanLikes.textContent = decrementLikes
+        isIncrement = false
       }
+      displayPriceAndLikes(photographer)
     })
   })
 }
@@ -130,7 +127,7 @@ function displayMediasSortedBy (sort, medias, container, photographer) {
       container.innerHTML = ''
       medias.forEach(media => {
         factoryMedia(photographer, media, container)
-        likesCount(media)
+        likesCount(media, photographer)
       })
       break
     case 'Titre':
@@ -138,7 +135,7 @@ function displayMediasSortedBy (sort, medias, container, photographer) {
       container.innerHTML = ''
       medias.forEach(media => {
         factoryMedia(photographer, media, container)
-        likesCount(media)
+        likesCount(media, photographer)
       })
       break
 
@@ -147,7 +144,7 @@ function displayMediasSortedBy (sort, medias, container, photographer) {
       container.innerHTML = ''
       medias.forEach(media => {
         factoryMedia(photographer, media, container)
-        likesCount(media)
+        likesCount(media, photographer)
       })
       break
 
@@ -156,18 +153,22 @@ function displayMediasSortedBy (sort, medias, container, photographer) {
       container.innerHTML = ''
       medias.forEach(media => {
         factoryMedia(photographer, media, container)
-        likesCount(media)
+        likesCount(media, photographer)
       })
       break
   }
 }
 
-function displayPriceAndLikes (likes, photographer) {
+function displayPriceAndLikes (photographer) {
   let totalLikes = 0
   const totalLikesElt = document.querySelector('#likes_and_price')
-  likes.forEach((like) => {
-    totalLikes = parseInt(like.innerText) + parseInt(totalLikes)
+  const likes = document.querySelectorAll('#clickforlikes')
+  likes.forEach(elt => {
+    const spanLikes = elt.querySelector('span')
+    const mediaLikes = parseInt(spanLikes.textContent)
+    totalLikes = totalLikes + mediaLikes
   })
+  totalLikesElt.innerHTML = ''
   totalLikesElt.innerHTML += `<div><span>${totalLikes}</span>
   <i class="fas fa-heart" tabindex="0" aria-label="likes"></i></div>
   <p>${photographer.price}€ /jour</p>`
@@ -220,7 +221,7 @@ function displayForm (photographer) {
       main.classList.remove('blurred')
       contentbg.style.display = 'none'
     })
-    cross.addEventListener('keyup', (e) => {
+    window.addEventListener('keyup', (e) => {
       if (e.key === 'Escape') {
         fondForm.style.display = 'none'
         main.style.opacity = '1'
@@ -364,7 +365,7 @@ function addEventOnLayout (position, tableauMedias, photographer, slider) {
     nextSlide(tableauMedias, position, photographer)
     addEventToClose(slider)
   })
-  next.addEventListener('keyup', (e) => {
+  window.addEventListener('keyup', (e) => {
     if (e.key === 'ArrowRight') {
       position = position + 1
       nextSlide(tableauMedias, position, photographer)
@@ -377,7 +378,7 @@ function addEventOnLayout (position, tableauMedias, photographer, slider) {
     prevSlide(tableauMedias, position, photographer)
     addEventToClose(slider)
   })
-  prev.addEventListener('keyup', (e) => {
+  window.addEventListener('keyup', (e) => {
     if (e.key === 'ArrowLeft') {
       position = position - 1
       prevSlide(tableauMedias, position, photographer)
@@ -393,7 +394,7 @@ function addEventToClose (slider) {
     slider.style.display = 'none'
     buttonOpen.style.display = 'block'
   })
-  slider.addEventListener('keyup', (e) => {
+  window.addEventListener('keyup', (e) => {
     if (e.key === 'Escape') {
       slider.style.display = 'none'
       buttonOpen.style.display = 'block'
