@@ -1,3 +1,6 @@
+import Image from './Image.class.js'
+import Video from './Video.class.js'
+
 retriveContent('data.json')
   .then(data => {
     const photographerId = getPhotopgraherId()
@@ -67,25 +70,8 @@ function displayDesc (actualPhotographer, medias) {
 
 function factoryMedia (actualPhotographer, media, container) {
   const mediasElt = container
-  if ('image' in media) {
-    mediasElt.innerHTML += `<div class="card_media">
-  <img src="img/${actualPhotographer.name}/${media.image}" id=${media.id} alt='${media.title} picture' tabindex="0"></img>
-  <h4>${media.title}</h4>
-  <div id='clickforlikes'>
-  <span>${media.likes}</span>
-  <i class="fas fa-heart" tabindex="0" aria-label="likes"></i>
-  </div>
-  </div>`
-  } else if ('video' in media) {
-    mediasElt.innerHTML += `<div class="card_media">
-    <video src="img/${actualPhotographer.name}/${media.video}" id=${media.id} alt='${media.title} video' tabindex="0"></video>
-    <h4>${media.title}</h4>
-    <div id='clickforlikes'>
-    <span>${media.likes}</span>
-    <i class="fas fa-heart" tabindex="0" aria-label="likes"></i>
-    </div>
-    </div>`
-  }
+  const mediaObject = factory(media, actualPhotographer)
+  mediasElt.innerHTML += mediaObject.displayInList()
 }
 
 function likesCount (photographer) {
@@ -320,6 +306,10 @@ function validate (event, verifFirst, verifLast, verifEmail) {
 function addSlider (mediaIMG, mediaVID, medias, photographer) {
   const slider = document.querySelector('.slider')
   const tableauIMG = []
+  const main = document.querySelector('main')
+  const header = document.querySelector('header')
+  header.setAttribute('aria-hidden', 'true')
+  main.setAttribute('aria-hidden', 'true')
   medias.forEach((media) => {
     if ('image' in media) {
       tableauIMG[tableauIMG.length] = media
@@ -365,6 +355,13 @@ function addEventOnLayout (position, tableauMedias, photographer, slider) {
     nextSlide(tableauMedias, position, photographer)
     addEventToClose(slider)
   })
+  next.addEventListener('keyup', (e) => {
+    if (e.key === 'Enter') {
+      position = position + 1
+      nextSlide(tableauMedias, position, photographer)
+      addEventToClose(slider)
+    }
+  })
   window.addEventListener('keyup', (e) => {
     if (e.key === 'ArrowRight') {
       position = position + 1
@@ -377,6 +374,13 @@ function addEventOnLayout (position, tableauMedias, photographer, slider) {
     position = position - 1
     prevSlide(tableauMedias, position, photographer)
     addEventToClose(slider)
+  })
+  prev.addEventListener('keyup', (e) => {
+    if (e.key === 'Enter') {
+      position = position - 1
+      prevSlide(tableauMedias, position, photographer)
+      addEventToClose(slider)
+    }
   })
   window.addEventListener('keyup', (e) => {
     if (e.key === 'ArrowLeft') {
@@ -394,6 +398,12 @@ function addEventToClose (slider) {
     slider.style.display = 'none'
     buttonOpen.style.display = 'block'
   })
+  cross.addEventListener('keyup', (e) => {
+    if (e.key === 'Enter') {
+      slider.style.display = 'none'
+      buttonOpen.style.display = 'block'
+    }
+  })
   window.addEventListener('keyup', (e) => {
     if (e.key === 'Escape') {
       slider.style.display = 'none'
@@ -404,32 +414,7 @@ function addEventToClose (slider) {
 
 function prevSlide (tableauMedias, position, photographer) {
   if (position >= 0) {
-    if ('image' in tableauMedias[position]) {
-      const slider = document.querySelector('.slider')
-      slider.innerHTML = ''
-      const lienPhoto = 'img/' + photographer.name + '/' + tableauMedias[position].image
-      slider.style.display = 'flex'
-      slider.innerHTML += `<div class='nav-btn prev-slide' tabindex="0" aria-label="diapo précédente" id='prevSlide'></div>
-          <div class='display'><img src="${lienPhoto}" tabindex="0"></div>
-          <p>${tableauMedias[position].title}</p>
-          <div id="cross" tabindex="0" aria-label="fermer la diapo">X</div>
-          <div class='nav-btn next-slide' tabindex="0" aria-label="diapo suivante" id='nextSlide'></div>`
-      addEventToClose(slider)
-      addEventOnLayout(position, tableauMedias, photographer, slider)
-    }
-    if ('video' in tableauMedias[position]) {
-      const slider = document.querySelector('.slider')
-      slider.innerHTML = ''
-      const lienVID = 'img/' + photographer.name + '/' + tableauMedias[position].video
-      slider.style.display = 'flex'
-      slider.innerHTML += `<div class='nav-btn prev-slide' tabindex="0" aria-label="diapo précédente" id='prevSlide'></div>
-      <div class='display'><video controls tabindex="0" src="${lienVID}"></video></div>
-      <p>${tableauMedias[position].title}</p>
-      <div id="cross" tabindex="0" aria-label="fermer la diapo">X</div>
-      <div class='nav-btn next-slide' tabindex="0" aria-label="diapo suivante" id='nextSlide'></div>`
-      addEventToClose(slider)
-      addEventOnLayout(position, tableauMedias, photographer, slider)
-    }
+    displayLightBoxContent(tableauMedias, position, photographer)
   } else {
     position = tableauMedias.length - 1
     prevSlide(tableauMedias, position, photographer)
@@ -438,35 +423,20 @@ function prevSlide (tableauMedias, position, photographer) {
 
 function nextSlide (tableauMedias, position, photographer) {
   if (position < tableauMedias.length) {
-    if ('image' in tableauMedias[position]) {
-      const slider = document.querySelector('.slider')
-      slider.innerHTML = ''
-      const lienPhoto = 'img/' + photographer.name + '/' + tableauMedias[position].image
-      slider.style.display = 'flex'
-      slider.innerHTML += `<div class='nav-btn prev-slide' tabindex="0" aria-label="diapo précédente" id='prevSlide'></div>
-          <div class='display'><img src="${lienPhoto}"></div>
-          <p>${tableauMedias[position].title}</p>
-          <div id="cross" tabindex="0" aria-label="fermer la diapo">X</div>
-          <div class='nav-btn next-slide' tabindex="0" aria-label="diapo suivante" id='nextSlide'></div>`
-      addEventOnLayout(position, tableauMedias, photographer, slider)
-    }
-    if ('video' in tableauMedias[position]) {
-      const slider = document.querySelector('.slider')
-      slider.innerHTML = ''
-      const lienVID = 'img/' + photographer.name + '/' + tableauMedias[position].video
-      slider.style.display = 'flex'
-      slider.innerHTML += `<div class='nav-btn prev-slide' tabindex="0" aria-label="diapo précédente" id='prevSlide'></div>
-      <div class='display'><video controls src="${lienVID}"></video></div>
-      <p>${tableauMedias[position].title}</p>
-      <div id="cross" tabindex="0" aria-label="fermer la diapo">X</div>
-      <div class='nav-btn next-slide' id='nextSlide' aria-label="diapo suivante" tabindex="0"></div>`
-
-      addEventOnLayout(position, tableauMedias, photographer, slider)
-    }
+    displayLightBoxContent(tableauMedias, position, photographer)
   } else {
     position = 0
     nextSlide(tableauMedias, position, photographer)
   }
+}
+
+function displayLightBoxContent (tableauMedias, position, photographer) {
+  const slider = document.querySelector('.slider')
+  slider.innerHTML = ''
+  const media = factory(tableauMedias[position], photographer)
+  slider.style.display = 'flex'
+  slider.innerHTML += media.displayInLightBox()
+  addEventOnLayout(position, tableauMedias, photographer, slider)
 }
 
 function displayIMG (img, tableauIMG) {
@@ -610,3 +580,12 @@ function closeAllSelect (elmnt) {
 
 /* Si l'utilisateur clique partout, ferme la selectbox */
 document.addEventListener('click', closeAllSelect)
+
+function factory (media, photographer) {
+  if ('image' in media) {
+    return new Image(media, photographer)
+  } else if ('video' in media) {
+    return new Video(media, photographer)
+  }
+  return undefined
+}
