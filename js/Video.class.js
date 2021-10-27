@@ -16,7 +16,7 @@ export default class Video {
       <video src="${this.videoUrl}" id=${this.id} alt='${this.title} video' tabindex="0"></video>
       <h4>${this.title}</h4>
       <div id='clickforlikes'>
-      <span>${this.likes}</span>
+      <span aria-live="polite">${this.likes}</span>
       <i class="fas fa-heart" tabindex="0" aria-label="likes"></i>
       </div>
       </div>`

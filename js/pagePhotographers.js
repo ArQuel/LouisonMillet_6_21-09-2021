@@ -92,6 +92,22 @@ function likesCount (photographer) {
       }
       displayPriceAndLikes(photographer)
     })
+    elt.addEventListener('keyup', (e) => {
+      if (e.key === 'Enter') {
+        const spanLikes = elt.querySelector('span')
+        const mediaLikes = parseInt(spanLikes.textContent)
+        if (isIncrement === false) {
+          const incrementLikes = mediaLikes + 1
+          spanLikes.textContent = incrementLikes
+          isIncrement = true
+        } else {
+          const decrementLikes = mediaLikes - 1
+          spanLikes.textContent = decrementLikes
+          isIncrement = false
+        }
+        displayPriceAndLikes(photographer)
+      }
+    })
   })
 }
 
@@ -174,9 +190,12 @@ function displayForm (photographer) {
     main.classList.add('blurred')
     fondForm.innerHTML = `
      <form id="validation">
+     <div id="crossForm" tabindex="0" aria-label="fermer le formulaire">X</div>
       <div>
           <h1>Contactez-moi</h1>
           <h2>${photographer.name}</h2>
+      </div>
+      <div>
           <label for="user_firstname">Prénom</label>
           <input type="text" id="user_firstname" name="user_firstname" for="firstname">
       </div>
@@ -192,13 +211,15 @@ function displayForm (photographer) {
           <label for="user_mail">Votre message</label>
           <textarea id="user_mail" name="user_message"></textarea>
       </div>
-      <div id="crossForm" tabindex="0" aria-label="fermer le formulaire">X</div>
 
       <div class="buttonSubmit">
           <button type="submit" id="#buttonSend" aria-label="Envoyer le formulaire">Envoyer</button>
       </div>
     </form>
     `
+    const firstFocusableElement = fondForm.querySelector('#crossForm')
+    const lastFocusableElement = fondForm.querySelector('button')
+    firstFocusableElement.focus()
     const cross = document.querySelector('#crossForm')
     cross.addEventListener('click', (e) => {
       fondForm.style.display = 'none'
@@ -214,6 +235,13 @@ function displayForm (photographer) {
         likesAndPrices.style.filter = 'blur(0px)'
         main.classList.remove('blurred')
         contentbg.style.display = 'none'
+      }
+    })
+    console.log(firstFocusableElement, lastFocusableElement)
+    document.addEventListener('keydown', function (e) {
+      if (document.activeElement === lastFocusableElement) {
+        firstFocusableElement.focus()
+        e.preventDefault()
       }
     })
     const verifFirst = false
@@ -306,10 +334,10 @@ function validate (event, verifFirst, verifLast, verifEmail) {
 function addSlider (mediaIMG, mediaVID, medias, photographer) {
   const slider = document.querySelector('.slider')
   const tableauIMG = []
-  const main = document.querySelector('main')
-  const header = document.querySelector('header')
-  header.setAttribute('aria-hidden', 'true')
-  main.setAttribute('aria-hidden', 'true')
+  // const main = document.querySelector('main')
+  // const header = document.querySelector('header')
+  // header.setAttribute('aria-hidden', 'true')
+  // main.setAttribute('aria-hidden', 'true')
   medias.forEach((media) => {
     if ('image' in media) {
       tableauIMG[tableauIMG.length] = media
@@ -387,6 +415,16 @@ function addEventOnLayout (position, tableauMedias, photographer, slider) {
       position = position - 1
       prevSlide(tableauMedias, position, photographer)
       addEventToClose(slider)
+    }
+  })
+  const firstFocusableElement = slider.querySelectorAll('div')[0]
+  const focusableContent = slider.querySelectorAll('div')
+  const lastFocusableElement = focusableContent[focusableContent.length - 1]
+  console.log(firstFocusableElement, lastFocusableElement)
+  document.addEventListener('keydown', function (e) {
+    if (document.activeElement === lastFocusableElement) {
+      firstFocusableElement.focus()
+      e.preventDefault()
     }
   })
 }
@@ -503,6 +541,7 @@ for (i = 0; i < l; i++) {
   /* Pour chaque élément créer une nouvelle div qui agira comme un élément select et lui ajouter les attributs d'accessibilité */
   a = document.createElement('DIV')
   a.setAttribute('class', 'select-selected')
+  a.setAttribute('id', 'select-selected')
   a.setAttribute('role', 'button')
   a.setAttribute('aria-haspopup', 'listbox')
   a.setAttribute('aria-expanded', 'false')
@@ -512,9 +551,7 @@ for (i = 0; i < l; i++) {
   /* Pour chaque élément créer une nouvelle div qui contiendra la liste des options */
   b = document.createElement('DIV')
   b.setAttribute('class', 'select-items select-hide')
-  a.addEventListener('click', (e) => {
-    a.setAttribute('aria-expanded', 'true')
-  })
+
   for (j = 1; j < ll; j++) {
     /* Pour chaque option dans l'élément select original, crée une nouvelle div qui agira comme une option */
     c = document.createElement('DIV')
@@ -551,8 +588,18 @@ for (i = 0; i < l; i++) {
     /* Quand le select est cliqué, ferme tous les autres select et ouvre/ferme celle actuelle */
     e.stopPropagation()
     closeAllSelect(this)
+    a.setAttribute('aria-expanded', 'true')
     this.nextSibling.classList.toggle('select-hide')
     this.classList.toggle('select-arrow-active')
+  })
+  a.addEventListener('keyup', function (e) {
+    /* Quand on appuie sur Enter, ferme tous les autres select et ouvre/ferme celle actuelle */
+    if (e.key === 'Enter') {
+      closeAllSelect(this)
+      a.setAttribute('aria-expanded', 'true')
+      this.nextSibling.classList.toggle('select-hide')
+      this.classList.toggle('select-arrow-active')
+    }
   })
 }
 

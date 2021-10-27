@@ -16,7 +16,7 @@ export default class Image {
       <img src="${this.imageUrl}" id=${this.id} alt='${this.title} picture' tabindex="0"></img>
       <h4>${this.title}</h4>
       <div id='clickforlikes'>
-      <span>${this.likes}</span>
+      <span aria-live="polite">${this.likes}</span>
       <i class="fas fa-heart" tabindex="0" aria-label="likes"></i>
       </div>
       </div>`
