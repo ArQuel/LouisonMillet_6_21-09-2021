@@ -228,7 +228,16 @@ function displayForm (photographer) {
       main.classList.remove('blurred')
       contentbg.style.display = 'none'
     })
-    window.addEventListener('keyup', (e) => {
+    cross.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        fondForm.style.display = 'none'
+        main.style.opacity = '1'
+        likesAndPrices.style.filter = 'blur(0px)'
+        main.classList.remove('blurred')
+        contentbg.style.display = 'none'
+      }
+    })
+    window.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
         fondForm.style.display = 'none'
         main.style.opacity = '1'
@@ -237,7 +246,6 @@ function displayForm (photographer) {
         contentbg.style.display = 'none'
       }
     })
-    console.log(firstFocusableElement, lastFocusableElement)
     document.addEventListener('keydown', function (e) {
       if (document.activeElement === lastFocusableElement) {
         firstFocusableElement.focus()
@@ -545,6 +553,7 @@ for (i = 0; i < l; i++) {
   a.setAttribute('role', 'button')
   a.setAttribute('aria-haspopup', 'listbox')
   a.setAttribute('aria-expanded', 'false')
+  a.setAttribute('tabindex', 0)
 
   a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML
   x[i].appendChild(a)
@@ -581,9 +590,45 @@ for (i = 0; i < l; i++) {
       }
       h.click()
     })
+    c.addEventListener('keydown', function (e) {
+      /* Quand un élément est cliqué, met à jour */
+      if (e.key === 'Enter') {
+        let y
+        let i
+        let k
+        let yl
+        const s = this.parentNode.parentNode.getElementsByTagName('select')[0]
+        const sl = s.length
+        const h = this.parentNode.previousSibling
+        for (i = 0; i < sl; i++) {
+          if (s.options[i].innerHTML === this.innerHTML) {
+            s.selectedIndex = i
+            h.innerHTML = this.innerHTML
+            y = this.parentNode.getElementsByClassName('same-as-selected')
+            yl = y.length
+            for (k = 0; k < yl; k++) {
+              y[k].removeAttribute('class')
+            }
+            this.setAttribute('class', 'same-as-selected')
+            break
+          }
+        }
+        h.click()
+      }
+    })
     b.appendChild(c)
   }
   x[i].appendChild(b)
+  a.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') {
+      console.log('test')
+      e.stopPropagation()
+      closeAllSelect(this)
+      a.setAttribute('aria-expanded', 'true')
+      this.nextSibling.classList.toggle('select-hide')
+      this.classList.toggle('select-arrow-active')
+    }
+  })
   a.addEventListener('click', function (e) {
     /* Quand le select est cliqué, ferme tous les autres select et ouvre/ferme celle actuelle */
     e.stopPropagation()
@@ -591,15 +636,6 @@ for (i = 0; i < l; i++) {
     a.setAttribute('aria-expanded', 'true')
     this.nextSibling.classList.toggle('select-hide')
     this.classList.toggle('select-arrow-active')
-  })
-  a.addEventListener('keyup', function (e) {
-    /* Quand on appuie sur Enter, ferme tous les autres select et ouvre/ferme celle actuelle */
-    if (e.key === 'Enter') {
-      closeAllSelect(this)
-      a.setAttribute('aria-expanded', 'true')
-      this.nextSibling.classList.toggle('select-hide')
-      this.classList.toggle('select-arrow-active')
-    }
   })
 }
 
